@@ -70,3 +70,8 @@ body {
     position: absolute;
     z-index: 10;
   }
+
+  .dices {
+    display: flex;
+    justify-content: center;
+  }
