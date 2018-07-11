@@ -14,8 +14,8 @@ $(document).ready(function() {
     $( ".roll-dice" ).click(function() {
         rollDice();
         sumDices = die1 + die2;
-        //$(".numbers").css("display", "none");
-    
+        player.position += sumDices;
+        
         if( die1 === 1 ) {
             $("#number-11").css("display", "block")
             } else if ( die1 === 2 ) {
@@ -45,6 +45,8 @@ $(document).ready(function() {
             };
             
 
+
+        $(".player1-piece").detach().appendTo(`#cell-${player.position}`);    
         alert("" + die1 + " " + die2);
     });
 
