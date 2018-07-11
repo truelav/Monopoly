@@ -1,0 +1,72 @@
+body {
+    display: flex;
+    justify-content: center;
+    background-color: #cbe9e1;
+  }
+  
+  .board {
+    border: solid 1px black;
+    width: 1000px;
+    height: 1000px;
+  }
+  
+  .both-columns {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .top-row {
+    padding: 0 ;
+    display: flex;
+  }
+  
+  .right-column {
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .left-column {
+    flex-direction: column;
+  }
+  
+  .bottom-row {
+    padding: 0 ;
+    display: flex;
+  }
+  
+  
+  
+  .top-square, .bottom-square {
+    margin: 0;
+    height: 130px;
+    width: 80px;
+    border: solid 1px black;
+  }
+  
+  .left-square , .right-square {
+    margin: 0;
+    height: 80px;
+    width: 130px;
+    border: solid 1px black;
+  }
+  
+  .cell-color {
+    width: 100%;
+    height: 20%;
+    background-color: gray;
+  }
+  
+  .square-1, .square-10 {
+    display: flex;
+    justify-content: center;
+    width: 130px;
+    height: 130px;
+  }
+  
+  .square-19 > .collect-salary {
+  }
+  
+  .player1-piece {
+    position: absolute;
+    z-index: 10;
+  }
