@@ -2,6 +2,14 @@ let die1;
 let die2;
 let sumDices;
 
+const player = {
+    position: 0,
+    nickname: "",
+    cash: 1000,
+    property: [],
+    relic: ""
+}
+
 $(document).ready(function() {
     $( ".roll-dice" ).click(function() {
         rollDice();
