@@ -2,6 +2,9 @@ body {
     display: flex;
     justify-content: center;
     background-color: #cbe9e1;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10px;
+    font-style: bold;
   }
   
   .board {
@@ -41,6 +44,7 @@ body {
     height: 130px;
     width: 80px;
     border: solid 1px black;
+    text-align: center;
   }
   
   .left-square , .right-square {
@@ -79,4 +83,12 @@ body {
   .dices {
     display: flex;
     justify-content: center;
+  }
+
+  #cell-11 {
+    -webkit-transform: rotate(90deg); /* Safari and Chrome */
+    -moz-transform: rotate(90deg);   /* Firefox */
+    -ms-transform: rotate(90deg);   /* IE 9 */
+    -o-transform: rotate(90deg);   /* Opera */
+    transform: rotate(90deg);
   }
