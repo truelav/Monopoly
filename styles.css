@@ -71,6 +71,11 @@ body {
     z-index: 10;
   }
 
+  .roll-dice {
+    display: flex;
+    justify-content: center;
+  }
+
   .dices {
     display: flex;
     justify-content: center;

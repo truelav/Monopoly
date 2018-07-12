@@ -14,8 +14,16 @@ $(document).ready(function() {
     $( ".roll-dice" ).click(function() {
         rollDice();
         sumDices = die1 + die2;
+
+        //updating the player position
         player.position += sumDices;
-        
+        console.log(player.position);
+        //check if you made a whole trip
+        if ( player.position > 39 ) {
+            player.position = player.position - 40;
+        }
+
+
         if( die1 === 1 ) {
             $("#number-11").css("display", "block")
             } else if ( die1 === 2 ) {
