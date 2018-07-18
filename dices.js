@@ -57,10 +57,20 @@ $(document).ready(function() {
         $(".player1-piece").detach().appendTo(`#cell-${player.position}`);    
         alert("" + die1 + " " + die2);
 
-        $(".game-updates").append( `<p>${board[player.position].name}</p>` )
-    });
+        $(".game-updates")
+          .append( 
+            `
+              <p>${board[player.position].name}</p>
+              <p>Price: ${board[player.position].price}</p>
+              <p>Rent: ${board[player.position].rental}</p>
+              <button class="end-turn">End Turn</button>
+            `
+           )
 
-    //$(".game-updates").append( `<p>${board[player.position].name}</p>` )
+        $(".end-turn").click( function() {
+          $(".game-updates").detach();
+        })
+    });
 
 });
 
@@ -79,7 +89,8 @@ const board  =  [{
     rental: [2, 10, 30, 90, 160, 250],
     color: "brown",
     housePrice: 50,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Community Chest"
   },{
@@ -88,7 +99,8 @@ const board  =  [{
     rental: [4, 20, 60, 180, 360, 450],
     color: "brown",
     housePrice: 50,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Income Tax",
     type: "tax",
@@ -97,14 +109,16 @@ const board  =  [{
     name: "Kings Cross Station",
     price: 200,
     rental: [25, 50, 100, 200],
-    type: "station"
+    type: "station",
+    owned: false
   },{
     name: "The Angel, Islington",
     price: 100,
     rental: [6, 30, 90, 270, 400, 550],
     color: "lightBlue",
     housePrice: 50,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Chance"
   },{
@@ -113,14 +127,16 @@ const board  =  [{
     rental: [6, 30, 90, 270, 400, 550],
     color: "lightBlue",
     housePrice: 50,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Pentonville Road",
     price: 120,
     rental: [8, 40, 100, 300, 450, 600],
     color: "lightBlue",
     housePrice: 50,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Jail"
   },{
@@ -129,37 +145,43 @@ const board  =  [{
     rental: [10, 50, 150, 450, 625, 750],
     color: "pink",
     housePrice: 100,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Electric Company",
     price: 150,
-    type: "utility"
+    type: "utility",
+    owned: false
   },{
     name: "Whitehall",
     price: 140,
     rental: [10, 50, 150, 450, 625, 750],
     color: "pink",
     housePrice: 100,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Northumberland Avenue",
     price: 160,
     rental: [12, 60, 180, 500, 700, 900],
     color: "pink",
     housePrice: 100,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Marylebone Station",
     price: 200,
     rental: [25, 50, 100, 200],
-    type: "station"
+    type: "station",
+    owned: false
   },{
     name: "Bow Steet",
     price: 180,
     rental: [14, 70, 200, 550, 750, 950],
     color: "orange",
     housePrice: 100,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Community Chest"
   },{
@@ -168,14 +190,16 @@ const board  =  [{
     rental: [14, 70, 200, 550, 750, 950],
     color: "orange",
     housePrice: 100,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Vine Steet",
     price: 200,
     rental: [16, 80, 220, 600, 800, 1000],
     color: "orange",
     housePrice: 100,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Free Parking"
   },{
@@ -184,7 +208,8 @@ const board  =  [{
     rental: [18, 90, 250, 700, 875, 1050],
     color: "red",
     housePrice: 150,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Chance"
   },{
@@ -193,44 +218,51 @@ const board  =  [{
     rental: [18, 90, 250, 700, 875, 1050],
     color: "red",
     housePrice: 150,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Trafalgar Square",
     price: 240,
     rental: [20, 100, 300, 750, 925, 1100],
     color: "red",
     housePrice: 150,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Fenchurch Street Station",
     price: 200,
     rental: [25, 50, 100, 200],
-    type: "station"
+    type: "station",
+    owned: false
   },{
     name: "Leicester Square",
     price: 260,
     rental: [22, 110, 330, 800, 975, 1150],
     color: "yellow",
     housePrice: 150,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Water Works",
     price: 150,
-    type: "utility"
+    type: "utility",
+    owned: false
   },{
     name: "Coventry Street",
     price: 260,
     rental: [22, 110, 330, 800, 975, 1150],
     color: "yellow",
     housePrice: 150,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Piccadilly",
     price: 280,
     rental: [22, 120, 360, 850, 1025, 1200],
     color: "yellow",
     housePrice: 140,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Go To Jail",
   },{
@@ -239,14 +271,16 @@ const board  =  [{
     rental: [26, 130, 390, 900, 1100, 1275],
     color: "green",
     housePrice: 200,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Oxford Street",
     price: 300,
     rental: [26, 130, 390, 900, 1100, 1275],
     color: "green",
     housePrice: 200,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Comminity Chest"
   },{
@@ -255,12 +289,14 @@ const board  =  [{
     rental: [28, 150, 450, 1000, 1200, 1400],
     color: "green",
     housePrice: 200,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Liverpool Street Station",
     price: 200,
     rental: [25, 50, 100, 200],
-    type: "station"
+    type: "station",
+    owned: false
   },{
     name: "Chance"
   },{
@@ -269,7 +305,8 @@ const board  =  [{
     rental: [35, 175, 500, 1100, 1300, 1500],
     color: "darkBlue",
     housePrice: 200,
-    type: "property"
+    type: "property",
+    owned: false
   },{
     name: "Super Tax",
     type: "tax",
@@ -280,7 +317,8 @@ const board  =  [{
     rental: [50, 200, 600, 1400, 1700, 2000],
     color: "darkBlue",
     housePrice: 200,
-    type: "property"
+    type: "property",
+    owned: false
   }]
 
 
