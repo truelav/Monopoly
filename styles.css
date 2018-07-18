@@ -85,10 +85,10 @@ body {
     justify-content: center;
   }
 
-  #cell-11 {
-    -webkit-transform: rotate(90deg); /* Safari and Chrome */
-    -moz-transform: rotate(90deg);   /* Firefox */
-    -ms-transform: rotate(90deg);   /* IE 9 */
-    -o-transform: rotate(90deg);   /* Opera */
-    transform: rotate(90deg);
+  .rotate-cell {
+    /* -webkit-transform: rotate(90deg); /* Safari and Chrome */
+    /* -moz-transform: rotate(90deg);   /* Firefox */
+    /* -ms-transform: rotate(90deg);*/  
+    /* -o-transform: rotate(90deg);    */
+    /* transform: rotate(90deg);   */
   }
