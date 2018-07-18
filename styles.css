@@ -92,3 +92,14 @@ body {
     /* -o-transform: rotate(90deg);    */
     /* transform: rotate(90deg);   */
   }
+
+  .cell-information {
+
+    font-size: 16px;
+    border: solid 1px black;
+  }
+
+  .end-turn {
+    display: flex;
+    justify-content: center;
+  }

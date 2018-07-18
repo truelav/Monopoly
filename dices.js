@@ -60,10 +60,12 @@ $(document).ready(function() {
         $(".game-updates")
           .append( 
             `
+            <div class="cell-information">
               <p>${board[player.position].name}</p>
               <p>Price: ${board[player.position].price}</p>
               <p>Rent: ${board[player.position].rental}</p>
               <button class="end-turn">End Turn</button>
+            </div> 
             `
            )
 
@@ -282,7 +284,7 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Comminity Chest"
+    name: "Community Chest"
   },{
     name: "Bond Street",
     price: 320,
