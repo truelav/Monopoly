@@ -67,12 +67,9 @@ body {
     height: 130px;
   }
   
-  .square-19 > .collect-salary {
-  }
-  
   .player1-piece {
     position: absolute;
-    z-index: 10;
+    z-index: 100;
   }
 
   .roll-dice {
@@ -94,7 +91,6 @@ body {
   }
 
   .cell-information {
-
     font-size: 16px;
     border: solid 1px black;
   }

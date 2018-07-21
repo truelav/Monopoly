@@ -64,6 +64,10 @@ $(document).ready(function() {
               <p>${board[player.position].name}</p>
               <p>Price: ${board[player.position].price}</p>
               <p>Rent: ${board[player.position].rental}</p>
+              <div class="action-buttons">
+                <button class="buy-property">Buy Property</button>
+                <button class="bid-prperty">Bid Property</button>
+              </div>
               <button class="end-turn">End Turn</button>
             </div> 
             `
