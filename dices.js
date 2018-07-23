@@ -1,23 +1,51 @@
+//const game = require('./game.js');
+
 let die1;
 let die2;
 let sumDices;
 
-const player = {
-    position: 0,
-    nickname: "",
-    cash: 1000,
-    property: [],
-    relic: ""
+const Player = function (piece, name, color, turn) {
+  this.cell = 0;
+  this.name = name;
+  this.piece = piece;
+  this.color = color;
+  this.money = 1500;
+  this.inJail = false;
+  this.property = {};
+  this.getOutOfJail = false;
+  this.turn = turn;
+  this.position = 0;
 }
 
+const players = [];
+const pieces = ['hat', 'show', 'iron'];
+
 $(document).ready(function() {
+  var player1 = new Player(pieces.pop(), 'truelav', 'blue', true);
+  var player2 = new Player(pieces.pop(), 'vasilica', 'red', false);
+  players.push(player1, player2);
+  
+ console.log(players)
+  players.forEach( function(player){
+    if (player.turn){
+      $(".game-updates").append(
+        `<div class="player info">
+          <p>Player ${player.name} roll the dice!!</p>
+        </div>  
+        `
+      )
+    }
+    
     $( ".roll-dice" ).click(function() {
         rollDice();
         sumDices = die1 + die2;
-
         //updating the player position
-        player.position += sumDices;
-        console.log(player.position);
+        if (player.turn){
+          console.log(player)
+          let tempPosition = player.position;
+          player.position = (sumDices + tempPosition);
+          console.log(player.position);
+        }
         //check if you made a whole trip
         if ( player.position > 39 ) {
             player.position = player.position - 40;
@@ -75,8 +103,11 @@ $(document).ready(function() {
 
         $(".end-turn").click( function() {
           $(".game-updates").detach();
+          $(".numbers").css("display", "none");
         })
     });
+
+  })
 
 });
 

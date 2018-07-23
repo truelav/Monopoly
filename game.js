@@ -320,7 +320,4 @@ const game = () => {
     }
 
 }
-export default {
-    player,
-    game
-}
+export { player }

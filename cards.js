@@ -1,3 +1,4 @@
+
 function chanceCard() {
     var x = Math.floor(Math.random() * ((16 - 1) + 1) + 1);
     var title = chancecards['chance' + x].title;

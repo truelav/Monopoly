@@ -1,7 +1,7 @@
-const rollDice = () => {
+const checkTurns = () => {
     
 }
 
-export default  {
-    rollDice
+export default {
+    checkTurns
 }
