@@ -317,4 +317,3 @@ const game = () => {
     }
 
 }
-export { player }
