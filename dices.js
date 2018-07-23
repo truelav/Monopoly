@@ -27,7 +27,6 @@ $(document).ready(function() {
   
  console.log(players)
   players.forEach( function(player){
-    console.log(player.turn)
     if (player.turn){
       $(".game-updates").append(
         `<div class="player info">
@@ -103,6 +102,7 @@ $(document).ready(function() {
   
             $(".buy-property").click(  function( ) {
               buyProperty(player, currentCell)
+              $(`#cell-${player.position} > .cell-color`).css("background-color", `${player.color}`)
             })
           } else if (currentCell.type === "chance"){
             //invoke the chance function 
@@ -144,8 +144,13 @@ const rollDice = function () {
 const buyProperty = function(player, cell){
   if(cell.type === 'property' && !cell.owned && player.money > cell.price){
     cell.owned = player.name;
+    player.money -= cell.price;
     player.property.push( cell )
-  }
+  } else if (cell.type === 'property' && cell.owned){
+    console.log('property is owned by another player play rent')
+    player.money -= cell.rent[0]
+  } 
+  console.log(player)
 }
 
 
@@ -154,7 +159,7 @@ const board  =  [{
     name: "Go",
     type: "go"
   },{
-    name: "Old Kent Road",
+    name: "MEDITERRANEAN AVENUE",
     price: 60,
     rental: [2, 10, 30, 90, 160, 250],
     color: "brown",
@@ -162,10 +167,10 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Community Chest",
+    name: "COMMUNITY CHEST",
     type: "community"
   },{
-    name: "Whitechapel Road",
+    name: "BALTIC AVENUE",
     price: 60,
     rental: [4, 20, 60, 180, 360, 450],
     color: "brown",
@@ -173,17 +178,17 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Income Tax",
+    name: "INCOME TAX",
     type: "tax",
     amount: 200
   },{
-    name: "Kings Cross Station",
+    name: "READING RAILROAD",
     price: 200,
     rental: [25, 50, 100, 200],
-    type: "station",
+    type: "property",
     owned: false
   },{
-    name: "The Angel, Islington",
+    name: "ORIENTAL AVENUE",
     price: 100,
     rental: [6, 30, 90, 270, 400, 550],
     color: "lightBlue",
@@ -191,9 +196,10 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Chance"
+    name: "Chance",
+    type: "chance"
   },{
-    name: "Euston Road",
+    name: "VERMONT AVENUE",
     price: 100,
     rental: [6, 30, 90, 270, 400, 550],
     color: "lightBlue",
@@ -201,7 +207,7 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Pentonville Road",
+    name: "CONNECTICUT AVENUE",
     price: 120,
     rental: [8, 40, 100, 300, 450, 600],
     color: "lightBlue",
@@ -209,75 +215,71 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Jail"
+    name: "Jail",
+    type: "jail"
   },{
-    name: "Pall Mall",
+    name: "ST.CHARLES AVENUE",
     price: 140,
     rental: [10, 50, 150, 450, 625, 750],
-    color: "pink",
     housePrice: 100,
     type: "property",
     owned: false
   },{
-    name: "Electric Company",
+    name: "ELECTRIC COMPANY",
     price: 150,
     type: "utility",
     owned: false
   },{
-    name: "Whitehall",
+    name: "STATES AVENUE",
     price: 140,
     rental: [10, 50, 150, 450, 625, 750],
-    color: "pink",
     housePrice: 100,
     type: "property",
     owned: false
   },{
-    name: "Northumberland Avenue",
+    name: "VIRGINIA AVENUE",
     price: 160,
     rental: [12, 60, 180, 500, 700, 900],
-    color: "pink",
     housePrice: 100,
     type: "property",
     owned: false
   },{
-    name: "Marylebone Station",
+    name: "PENNSYLVANIA RAILROAD",
     price: 200,
     rental: [25, 50, 100, 200],
-    type: "property",
+    type: "railroad",
     owned: false
   },{
-    name: "Bow Steet",
+    name: "ST.JAMES PLACE",
     price: 180,
     rental: [14, 70, 200, 550, 750, 950],
-    color: "orange",
     housePrice: 100,
     type: "property",
     owned: false
   },{
-    name: "Community Chest"
+    name: "COMMUNITY CHEST",
+    type: 'community'
   },{
-    name: "Marlborough Steet",
+    name: "TENESSEE AVENUE",
     price: 180,
     rental: [14, 70, 200, 550, 750, 950],
-    color: "orange",
     housePrice: 100,
     type: "property",
     owned: false
   },{
-    name: "Vine Steet",
+    name: "NEW YORK AVENUE",
     price: 200,
     rental: [16, 80, 220, 600, 800, 1000],
-    color: "orange",
     housePrice: 100,
     type: "property",
     owned: false
   },{
-    name: "Free Parking"
+    name: "Free Parking",
+    type: 'parking',
   },{
-    name: "The Strand",
+    name: "KENTUCKY AVENUE",
     price: 220,
     rental: [18, 90, 250, 700, 875, 1050],
-    color: "red",
     housePrice: 150,
     type: "property",
     owned: false
@@ -285,29 +287,34 @@ const board  =  [{
     name: "Chance",
     type: 'chance'
   },{
-    name: "Fleet Street",
+    name: "INDIANA AVENUE",
     price: 220,
     rental: [18, 90, 250, 700, 875, 1050],
-    color: "red",
     housePrice: 150,
     type: "property",
     owned: false
   },{
-    name: "Trafalgar Square",
+    name: "ILLINOIS AVENUE",
     price: 240,
     rental: [20, 100, 300, 750, 925, 1100],
-    color: "red",
     housePrice: 150,
     type: "property",
     owned: false
   },{
-    name: "Fenchurch Street Station",
+    name: "B&O RAILROAD",
     price: 200,
     rental: [25, 50, 100, 200],
     type: "station",
     owned: false
   },{
-    name: "Leicester Square",
+    name: "ATLANTIC AVENUE",
+    price: 260,
+    rental: [22, 110, 330, 800, 975, 1150],
+    housePrice: 150,
+    type: "property",
+    owned: false
+  },{
+    name: "VENTNOR AVENUE",
     price: 260,
     rental: [22, 110, 330, 800, 975, 1150],
     color: "yellow",
@@ -315,20 +322,12 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Water Works",
+    name: "WATER WORKS",
     price: 150,
     type: "utility",
     owned: false
   },{
-    name: "Coventry Street",
-    price: 260,
-    rental: [22, 110, 330, 800, 975, 1150],
-    color: "yellow",
-    housePrice: 150,
-    type: "property",
-    owned: false
-  },{
-    name: "Piccadilly",
+    name: "MARVIN GARDENS",
     price: 280,
     rental: [22, 120, 360, 850, 1025, 1200],
     color: "yellow",
@@ -336,46 +335,45 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Go To Jail",
+    name: "GO TO JAIL",
+    type: 'jail',
   },{
-    name: "Regent Street",
+    name: "PACIFIC AVENUE",
     price: 300,
     rental: [26, 130, 390, 900, 1100, 1275],
-    color: "green",
     housePrice: 200,
     type: "property",
     owned: false
   },{
-    name: "Oxford Street",
+    name: "NORTH CAROLINA AVENUE",
     price: 300,
     rental: [26, 130, 390, 900, 1100, 1275],
-    color: "green",
     housePrice: 200,
     type: "property",
     owned: false
   },{
-    name: "Community Chest"
+    name: "Community Chest",
+    type: 'chest',
   },{
-    name: "Bond Street",
+    name: "PENNSYLVANIA AVENUE",
     price: 320,
     rental: [28, 150, 450, 1000, 1200, 1400],
-    color: "green",
     housePrice: 200,
     type: "property",
     owned: false
   },{
-    name: "Liverpool Street Station",
+    name: "SHORT LINE",
     price: 200,
     rental: [25, 50, 100, 200],
     type: "station",
     owned: false
   },{
-    name: "Chance"
+    name: "Chance",
+    type: 'chance',
   },{
-    name: "Park Lane",
+    name: "PARK PLACE",
     price: 350,
     rental: [35, 175, 500, 1100, 1300, 1500],
-    color: "darkBlue",
     housePrice: 200,
     type: "property",
     owned: false
@@ -384,10 +382,9 @@ const board  =  [{
     type: "tax",
     amount: 100
   },{
-    name: "Mayfair",
+    name: "BOARDWALK",
     price: 400,
     rental: [50, 200, 600, 1400, 1700, 2000],
-    color: "darkBlue",
     housePrice: 200,
     type: "property",
     owned: false
