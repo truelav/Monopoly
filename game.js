@@ -24,7 +24,6 @@ const game = () => {
         get: 200,
         img: 'https://preview.ibb.co/catK6x/go.jpg'
     },
-
     {
         name: 'Mediteranean Avenue',
         price: 60,
@@ -34,7 +33,6 @@ const game = () => {
         type: "property",
         owned: false
     },
-
     {
         name: 'Community Chest',
         cost: null,
@@ -42,7 +40,6 @@ const game = () => {
         desc: 'collect the card',
         img: "https://preview.ibb.co/catK6x/go.jpg"     
     },
-
     {
         name: 'Baltic Avenue',
         price: 60,
