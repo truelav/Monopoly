@@ -48,6 +48,8 @@ $(document).ready(function() {
               player.position = player.position - 40;
           }
 
+          let currentCell = board[player.position]
+
           if( die1 === 1 ) {
               $("#number-11").css("display", "block")
               } else if ( die1 === 2 ) {
@@ -81,21 +83,46 @@ $(document).ready(function() {
           $(".player1-piece").detach().appendTo(`#cell-${player.position}`);    
           alert("" + die1 + " " + die2);
 
-          $(".game-updates")
-            .append( 
+          if(currentCell.type === "property"){
+            console.log('propery cell')
+            $(".game-updates")
+              .append( 
+                `
+                <div class="cell-information">
+                  <p>${currentCell.name}</p>
+                  <p>Price: ${currentCell.price}</p>
+                  <p>Rent: ${currentCell.rental}</p>
+                  <div class="action-buttons">
+                    <button class="buy-property">Buy Property</button>
+                    <button class="bid-prperty">Bid Property</button>
+                  </div>
+                  <button class="end-turn">End Turn</button>
+                </div> 
+                `
+              )
+  
+            $(".buy-property").click(  function( ) {
+              buyProperty(player, currentCell)
+            })
+          } else if (currentCell.type === "chance"){
+            //invoke the chance function 
+            console.log('chance cell')
+            $(".game-updates")
+            .append(
               `
-              <div class="cell-information">
-                <p>${board[player.position].name}</p>
-                <p>Price: ${board[player.position].price}</p>
-                <p>Rent: ${board[player.position].rental}</p>
-                <div class="action-buttons">
-                  <button class="buy-property">Buy Property</button>
-                  <button class="bid-prperty">Bid Property</button>
-                </div>
+              <div class="chance">
+                <p>You've got chance</p>
                 <button class="end-turn">End Turn</button>
-              </div> 
+              </div>
               `
             )
+
+          } else if (currentCell.type === 'tax'){
+            //invoke the tax function
+            console.log('tax cell')
+          } else if (currentCell.type === "community"){
+            //invoke community chest
+          }
 
           $(".end-turn").click( function() {
             $(".game-updates").detach();
@@ -124,7 +151,8 @@ const buyProperty = function(player, cell){
 
 
 const board  =  [{
-    name: "Go"
+    name: "Go",
+    type: "go"
   },{
     name: "Old Kent Road",
     price: 60,
@@ -134,7 +162,8 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Community Chest"
+    name: "Community Chest",
+    type: "community"
   },{
     name: "Whitechapel Road",
     price: 60,
@@ -214,7 +243,7 @@ const board  =  [{
     name: "Marylebone Station",
     price: 200,
     rental: [25, 50, 100, 200],
-    type: "station",
+    type: "property",
     owned: false
   },{
     name: "Bow Steet",
@@ -253,7 +282,8 @@ const board  =  [{
     type: "property",
     owned: false
   },{
-    name: "Chance"
+    name: "Chance",
+    type: 'chance'
   },{
     name: "Fleet Street",
     price: 220,
