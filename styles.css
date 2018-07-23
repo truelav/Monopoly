@@ -52,6 +52,8 @@ body {
     height: 80px;
     width: 130px;
     border: solid 1px black;
+    display: flex;
+    align-items: flex-start;
   }
   
   .cell-color {
@@ -82,20 +84,16 @@ body {
     justify-content: center;
   }
 
-  .rotate-cell {
-    /* -webkit-transform: rotate(90deg); /* Safari and Chrome */
-    /* -moz-transform: rotate(90deg);   /* Firefox */
-    /* -ms-transform: rotate(90deg);*/  
-    /* -o-transform: rotate(90deg);    */
-    /* transform: rotate(90deg);   */
-  }
-
-  .cell-information {
-    font-size: 16px;
-    border: solid 1px black;
-  }
-
-  .end-turn {
+  /* .rotate-cell {
+    -webkit-transform: rotate(90deg); 
+  } */
+  .left-square-11 {
     display: flex;
     justify-content: center;
+  }
+
+  .cell-color-left {
+    width: 20%;
+    height: 100%;
+    background-color: gray;
   }

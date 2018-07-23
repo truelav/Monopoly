@@ -11,7 +11,7 @@ const Player = function (piece, name, color, turn) {
   this.color = color;
   this.money = 1500;
   this.inJail = false;
-  this.property = {};
+  this.property = [];
   this.getOutOfJail = false;
   this.turn = turn;
   this.position = 0;
@@ -27,6 +27,7 @@ $(document).ready(function() {
   
  console.log(players)
   players.forEach( function(player){
+    console.log(player.turn)
     if (player.turn){
       $(".game-updates").append(
         `<div class="player info">
@@ -34,88 +35,92 @@ $(document).ready(function() {
         </div>  
         `
       )
+      $( ".roll-dice" ).click(function() {
+          rollDice();
+          sumDices = die1 + die2;
+          //updating the player position
+            console.log(player)
+            let tempPosition = player.position;
+            player.position = (sumDices + tempPosition);
+            console.log(player.position);
+          //check if you made a whole trip
+          if ( player.position > 39 ) {
+              player.position = player.position - 40;
+          }
+
+          if( die1 === 1 ) {
+              $("#number-11").css("display", "block")
+              } else if ( die1 === 2 ) {
+              $("#number-21, #number-31").css("display", "block")
+              } else if ( die1 === 3) {
+                  $("#number-11, #number-41, #number-51").css("display", "block")
+              }  else if ( die1 === 4) {
+                  $("#number-41, #number-61, #number-51, #number-71").css("display", "block")
+              }   else if ( die1 === 5) {
+                  $("#number-11, #number-41, #number-61, #number-51, #number-71").css("display", "block")
+              }   else if ( die1 === 6) {
+                  $("#number-21, #number-31, #number-41, #number-61, #number-51, #number-71").css("display", "block")
+              };
+              
+              if( die2 === 1 ) {
+              $("#number-12").css("display", "block")
+              } else if ( die2 === 2 ) {
+              $("#number-22, #number-32").css("display", "block")
+              } else if ( die2 === 3) {
+                  $("#number-12, #number-42, #number-52").css("display", "block")
+              }  else if ( die2 === 4) {
+                  $("#number-42, #number-62, #number-52, #number-72").css("display", "block")
+              }   else if ( die2 === 5) {
+                  $("#number-12, #number-42, #number-62, #number-52, #number-72").css("display", "block")
+              }   else if ( die2 === 6) {
+                  $("#number-22, #number-32, #number-42, #number-62, #number-52, #number-72").css("display", "block")
+              };
+              
+
+
+          $(".player1-piece").detach().appendTo(`#cell-${player.position}`);    
+          alert("" + die1 + " " + die2);
+
+          $(".game-updates")
+            .append( 
+              `
+              <div class="cell-information">
+                <p>${board[player.position].name}</p>
+                <p>Price: ${board[player.position].price}</p>
+                <p>Rent: ${board[player.position].rental}</p>
+                <div class="action-buttons">
+                  <button class="buy-property">Buy Property</button>
+                  <button class="bid-prperty">Bid Property</button>
+                </div>
+                <button class="end-turn">End Turn</button>
+              </div> 
+              `
+            )
+
+          $(".end-turn").click( function() {
+            $(".game-updates").detach();
+            $(".numbers").css("display", "none");
+          })
+      });
     }
-    
-    $( ".roll-dice" ).click(function() {
-        rollDice();
-        sumDices = die1 + die2;
-        //updating the player position
-        if (player.turn){
-          console.log(player)
-          let tempPosition = player.position;
-          player.position = (sumDices + tempPosition);
-          console.log(player.position);
-        }
-        //check if you made a whole trip
-        if ( player.position > 39 ) {
-            player.position = player.position - 40;
-        }
-
-
-        if( die1 === 1 ) {
-            $("#number-11").css("display", "block")
-            } else if ( die1 === 2 ) {
-            $("#number-21, #number-31").css("display", "block")
-            } else if ( die1 === 3) {
-                $("#number-11, #number-41, #number-51").css("display", "block")
-            }  else if ( die1 === 4) {
-                $("#number-41, #number-61, #number-51, #number-71").css("display", "block")
-            }   else if ( die1 === 5) {
-                $("#number-11, #number-41, #number-61, #number-51, #number-71").css("display", "block")
-            }   else if ( die1 === 6) {
-                $("#number-21, #number-31, #number-41, #number-61, #number-51, #number-71").css("display", "block")
-            };
-            
-            if( die2 === 1 ) {
-            $("#number-12").css("display", "block")
-            } else if ( die2 === 2 ) {
-            $("#number-22, #number-32").css("display", "block")
-            } else if ( die2 === 3) {
-                $("#number-12, #number-42, #number-52").css("display", "block")
-            }  else if ( die2 === 4) {
-                $("#number-42, #number-62, #number-52, #number-72").css("display", "block")
-            }   else if ( die2 === 5) {
-                $("#number-12, #number-42, #number-62, #number-52, #number-72").css("display", "block")
-            }   else if ( die2 === 6) {
-                $("#number-22, #number-32, #number-42, #number-62, #number-52, #number-72").css("display", "block")
-            };
-            
-
-
-        $(".player1-piece").detach().appendTo(`#cell-${player.position}`);    
-        alert("" + die1 + " " + die2);
-
-        $(".game-updates")
-          .append( 
-            `
-            <div class="cell-information">
-              <p>${board[player.position].name}</p>
-              <p>Price: ${board[player.position].price}</p>
-              <p>Rent: ${board[player.position].rental}</p>
-              <div class="action-buttons">
-                <button class="buy-property">Buy Property</button>
-                <button class="bid-prperty">Bid Property</button>
-              </div>
-              <button class="end-turn">End Turn</button>
-            </div> 
-            `
-           )
-
-        $(".end-turn").click( function() {
-          $(".game-updates").detach();
-          $(".numbers").css("display", "none");
-        })
-    });
-
   })
 
 });
+    
 
 
 const rollDice = function () {
     die1 = Math.floor( Math.random() * 6 ) + 1;
     die2 = Math.floor( Math.random() * 6 ) + 1;
 }
+
+const buyProperty = function(player, cell){
+  if(cell.type === 'property' && !cell.owned && player.money > cell.price){
+    cell.owned = player.name;
+    player.property.push( cell )
+  }
+}
+
 
 
 const board  =  [{
