@@ -109,3 +109,7 @@ body {
   .show-players {
     /* display: none; */
   }
+
+  #player-3-input, #player-4-input {
+    display:none;
+  }
