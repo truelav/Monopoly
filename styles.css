@@ -97,3 +97,11 @@ body {
     height: 100%;
     background-color: gray;
   }
+
+  .page-view {
+    display: none;
+  }
+
+  #setup {
+    margin: 15px;
+  }
