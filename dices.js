@@ -4,6 +4,11 @@ let die1;
 let die2;
 let sumDices;
 var turn = 0;
+var currentCell;
+var currentPlayer;
+var nextPlayer;
+var numberOfPlayers;
+
 
 const Player = function (piece, name, color, turn) {
   this.cell = 0;
@@ -22,7 +27,6 @@ const players = [];
 const pieces = ['hat', 'show', 'iron'];
 
 $(document).ready(function() {
-
 
   $('#player-number').change(function() {
       var numberOfPlayers = $("#player-number").val();
@@ -50,79 +54,63 @@ $(document).ready(function() {
         die1Val();
         die2Val();
 
-        var currentPlayer = players[i]
+        currentPlayer = players[i]
+        if (i === players.length - 1){
+          nextPlayer = players[0]
+        } else {
+          nextPlayer = players[i + 1]
+        }
 
 
         //updating the player position
         let tempPosition = currentPlayer.position;
         currentPlayer.position = (sumDices + tempPosition);
-        console.log(currentPlayer.position);
 
         //check if you made a whole trip
         if ( currentPlayer.position > 39 ) {
             currentPlayer.position = currentCell.position - 40;
         }
 
-        var currentCell = board[currentPlayer.position]
+        currentCell = board[currentPlayer.position]
 
         $(".player1-piece").detach().appendTo(`#cell-${currentPlayer.position}`);    
         alert("" + die1 + " " + die2);
   
         if(currentCell.type === "property"){
-          $(".game-updates")
-            .append( 
-              `
-              <div class="cell-information">
-                <p>${currentCell.name}</p>
-                <p>Price: ${currentCell.price}</p>
-                <p>Rent: ${currentCell.rental}</p>
-                <div class="action-buttons">
-                  <button class="buy-property">Buy Property</button>
-                  <button class="bid-prperty">Bid Property</button>
-                </div>
-                <button class="end-turn">End Turn</button>
-              </div> 
-              `
-            )
-  
-        // $(".buy-property").click(  function( ) {
-        //   buyProperty(player, currentCell)
-        //   $(`#cell-${player.position} > .cell-color`).css("background-color", `${player.color}`)
-        // })
+          appendUpdatesProperty()
+
+        $(".buy-property").click(  function( ) {
+          buyProperty(currentPlayer, currentCell)
+          $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
+        })
   
         } else if (currentCell.type === "chance"){
           //invoke the chance function 
-          console.log('chance cell')
-          $(".game-updates")
-          .append(
-            `
-            <div class="chance">
-              <p>You've got chance</p>
-              <button class="end-turn">End Turn</button>
-            </div>
-            `
-          )
+          appendUpdatesRest()
   
         } else if (currentCell.type === 'tax'){
           //invoke the tax function
-          console.log('tax cell')
+          appendUpdatesRest()
         } else if (currentCell.type === "community"){
-          //invoke community chest
+          appendUpdatesRest()
         }
   
         $(".end-turn").click( function() {
           $(".game-updates").detach();
+          console.log(currentPlayer, nextPlayer)
           currentPlayer.turn = false;
-          console.log('index is:  ' + i)
-          //players[i + 1].turn = true;
-          sumDices = 0;
-          $(".numbers").css("display", "none");
+          nextPlayer.turn = true;
+          die1 = 0; die2 = 0;
+          die1Val();
+          die2Val();
+         // $(".numbers").css("display", "none");
         })
 
-      }
+      } // check if the player's turn is true
     
-      }  /// each player loop
-    });
+    }  /// each player loop
+
+  });
 });
 
 
@@ -147,12 +135,12 @@ const buyProperty = function(player, cell){
 }
 
 const startGame = function(){
-  var numberOfPlayers = $("#player-number").val();
+  numberOfPlayers = $("#player-number").val();
   var player1 = new Player ('hat', $(`#player-1-name`).val(), $(`#player-1-color`).val(), true)
   var player2 = new Player ('car', $(`#player-2-name`).val(), $(`#player-3-color`).val(), false)
       
   players.push(player1, player2)    
-  console.log(player1, player2)
+  //console.log(player1, player2)
   $("#setup").css("display", "none");
   $(".page-view").css("display", "block");
 }
@@ -168,10 +156,10 @@ const die1Val = function () {
     $("#number-41, #number-61, #number-51, #number-71").css("display", "block")
   }   else if ( die1 === 5) {
     $("#number-11, #number-41, #number-61, #number-51, #number-71").css("display", "block")
-  }   else if ( die1 === 6) {
+  }  else if ( die1 === 6) {
     $("#number-21, #number-31, #number-41, #number-61, #number-51, #number-71").css("display", "block")
-  // } else if ( die1 === 0 ) {
-  //   $()
+  } else if ( die1 === 0 ) {
+    $("#number-11, #number-21, #number-31, #number-41, #number-61, #number-51, #number-71").css("display", "none")
   } 
 }
 
@@ -188,7 +176,9 @@ const die2Val = function () {
       $("#number-12, #number-42, #number-62, #number-52, #number-72").css("display", "block")
   }  else if ( die2 === 6) {
       $("#number-22, #number-32, #number-42, #number-62, #number-52, #number-72").css("display", "block")
-  };
+  } else if ( die2 === 0 ) {
+    $("#number-12, #number-22, #number-32, #number-42, #number-62, #number-52, #number-72").css("display", "none")
+  } 
 }
 
 const appendUpdatesProperty = function() {
@@ -215,12 +205,6 @@ const appendUpdatesRest = function() {
                       `
                       <div class="cell-information">
                         <p>${currentCell.name}</p>
-                        <p>Price: ${currentCell.price}</p>
-                        <p>Rent: ${currentCell.rental}</p>
-                        <div class="action-buttons">
-                          <button class="buy-property">Buy Property</button>
-                          <button class="bid-prperty">Bid Property</button>
-                        </div>
                         <button class="end-turn">End Turn</button>
                       </div> 
                       `
