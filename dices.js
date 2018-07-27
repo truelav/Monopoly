@@ -131,7 +131,6 @@ const buyProperty = function(player, cell){
     console.log('property is owned by another player play rent')
     player.money -= cell.rent[0]
   } 
-  console.log(player)
 }
 
 const startGame = function(){
@@ -140,7 +139,6 @@ const startGame = function(){
   var player2 = new Player ('car', $(`#player-2-name`).val(), $(`#player-3-color`).val(), false)
       
   players.push(player1, player2)    
-  //console.log(player1, player2)
   $("#setup").css("display", "none");
   $(".page-view").css("display", "block");
 }
@@ -209,6 +207,32 @@ const appendUpdatesRest = function() {
                       </div> 
                       `
                     )
+}
+
+const appendChanceAndCommunity = function(cell) {
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
+const payIncomeTax = function(player){
+  var tenthOfYourMoney = Math.floor(player.money / 10);
+  player.money -= tenthOfYourMoney;
+}
+
+const payLuxuryTax = function(player){
+  player.money -= 75;
+}
+
+const communityChest = function(player){
+  var chestCard = communityChestCards[Math.floor( Math.random() * 10 )]
+  chestCard.action(player) 
 }
 
 
@@ -447,4 +471,62 @@ const board  =  [{
     owned: false
   }]
 
+const communityChestCards = [
+  {
+    name: "Get out of the jail",
+    action: function(player){
+      player.getOutOfJail = true;
+    }
+  }, {
+    name: "you have won beauty contest collect $10",
+    action: function(player){
+      player.money += 10;
+    }
+  }, {
+    name: "from stock exchange you get $50, collect $50",
+    action: function(player){
+      player.money += 50;
+    }
+  }, {
+    name: "Life insurance matures, collect $100",
+    action: function(player){
+      player.money += 100;
+    }
+  }, {
+    name: "Income tax refund collect $20",
+    action: function(player){
+      player.money += 20;
+    }
+  }, {
+    name: "Holiday fund matures, collect $100",
+    action: function(player){
+      player.money += 100;
+    }
+  }, {
+    name: "You inherit $100",
+    action: function(player){
+      player.money += 100;
+    }
+  }, {
+    name: "Receive $25 consultancy fee",
+    action: function(player){
+      player.money += 25;
+    }
+  }, {
+    name: "Pay your due bills equal to $100",
+    action: function(player){
+      player.money -= 100;
+    }
+  },  {
+    name: "Bank error, you loose $50",
+    action: function(player){
+      player.money -= 50;
+    }
+  }
+]
 
+const chanceCards = [
+  {
+
+  }
+]
