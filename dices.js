@@ -1,8 +1,9 @@
-//const game = require('./game.js');
+
 
 let die1;
 let die2;
 let sumDices;
+var turn = 0;
 
 const Player = function (piece, name, color, turn) {
   this.cell = 0;
@@ -21,124 +22,116 @@ const players = [];
 const pieces = ['hat', 'show', 'iron'];
 
 $(document).ready(function() {
-  var player1 = new Player(pieces.pop(), 'truelav', 'blue', true);
-  var player2 = new Player(pieces.pop(), 'vasilica', 'red', false);
-  players.push(player1, player2);
-  
- console.log(players)
-  players.forEach( function(player){
-    if (player.turn){
-      $(".game-updates").append(
-        `<div class="player info">
-          <p>Player ${player.name} roll the dice!!</p>
-        </div>  
-        `
-      )
-      $( ".roll-dice" ).click(function() {
-          rollDice();
-          sumDices = die1 + die2;
-          //updating the player position
-            console.log(player)
-            let tempPosition = player.position;
-            player.position = (sumDices + tempPosition);
-            console.log(player.position);
-          //check if you made a whole trip
-          if ( player.position > 39 ) {
-              player.position = player.position - 40;
-          }
-
-          let currentCell = board[player.position]
-
-          if( die1 === 1 ) {
-              $("#number-11").css("display", "block")
-              } else if ( die1 === 2 ) {
-              $("#number-21, #number-31").css("display", "block")
-              } else if ( die1 === 3) {
-                  $("#number-11, #number-41, #number-51").css("display", "block")
-              }  else if ( die1 === 4) {
-                  $("#number-41, #number-61, #number-51, #number-71").css("display", "block")
-              }   else if ( die1 === 5) {
-                  $("#number-11, #number-41, #number-61, #number-51, #number-71").css("display", "block")
-              }   else if ( die1 === 6) {
-                  $("#number-21, #number-31, #number-41, #number-61, #number-51, #number-71").css("display", "block")
-              };
-              
-              if( die2 === 1 ) {
-              $("#number-12").css("display", "block")
-              } else if ( die2 === 2 ) {
-              $("#number-22, #number-32").css("display", "block")
-              } else if ( die2 === 3) {
-                  $("#number-12, #number-42, #number-52").css("display", "block")
-              }  else if ( die2 === 4) {
-                  $("#number-42, #number-62, #number-52, #number-72").css("display", "block")
-              }   else if ( die2 === 5) {
-                  $("#number-12, #number-42, #number-62, #number-52, #number-72").css("display", "block")
-              }   else if ( die2 === 6) {
-                  $("#number-22, #number-32, #number-42, #number-62, #number-52, #number-72").css("display", "block")
-              };
-              
 
 
-          $(".player1-piece").detach().appendTo(`#cell-${player.position}`);    
-          alert("" + die1 + " " + die2);
-
-          if(currentCell.type === "property"){
-            console.log('propery cell')
-            $(".game-updates")
-              .append( 
-                `
-                <div class="cell-information">
-                  <p>${currentCell.name}</p>
-                  <p>Price: ${currentCell.price}</p>
-                  <p>Rent: ${currentCell.rental}</p>
-                  <div class="action-buttons">
-                    <button class="buy-property">Buy Property</button>
-                    <button class="bid-prperty">Bid Property</button>
-                  </div>
-                  <button class="end-turn">End Turn</button>
-                </div> 
-                `
-              )
-  
-            $(".buy-property").click(  function( ) {
-              buyProperty(player, currentCell)
-              $(`#cell-${player.position} > .cell-color`).css("background-color", `${player.color}`)
-            })
-          } else if (currentCell.type === "chance"){
-            //invoke the chance function 
-            console.log('chance cell')
-            $(".game-updates")
-            .append(
-              `
-              <div class="chance">
-                <p>You've got chance</p>
-                <button class="end-turn">End Turn</button>
-              </div>
-              `
-            )
-
-          } else if (currentCell.type === 'tax'){
-            //invoke the tax function
-            console.log('tax cell')
-          } else if (currentCell.type === "community"){
-            //invoke community chest
-          }
-
-          $(".end-turn").click( function() {
-            $(".game-updates").detach();
-            $(".numbers").css("display", "none");
-          })
-      });
-    }
+  $('#player-number').change(function() {
+      var numberOfPlayers = $("#player-number").val();
+      if (numberOfPlayers === '2'){
+          $( `#player-${1}-input, #player-${2}-input`).css("display", "block");
+          $(`#player-${3}-input, #player-${4}-input`).css("display", "none");
+      } else if (numberOfPlayers === '3'){
+          $(`#player-${3}-input, #player-${1}-input, #player-${2}-input`).css("display", "block");
+          $(`#player-${4}-input`).css("display", "none");
+      } else if (numberOfPlayers === '4'){
+          $(`#player-${3}-input, #player-${1}-input, #player-${2}-input, #player-${4}-input`).css("display", "block");
+      }
   })
 
+  $(".start-game").click(function(){
+    startGame()
+  })
+
+  $( ".roll-dice" ).click(function() { 
+    for (var i = 0; i < players.length; i++){
+      if (players[i].turn){
+        rollDice();
+
+        //update dices
+        die1Val();
+        die2Val();
+
+        var currentPlayer = players[i]
+
+
+        //updating the player position
+        let tempPosition = currentPlayer.position;
+        currentPlayer.position = (sumDices + tempPosition);
+        console.log(currentPlayer.position);
+
+        //check if you made a whole trip
+        if ( currentPlayer.position > 39 ) {
+            currentPlayer.position = currentCell.position - 40;
+        }
+
+        var currentCell = board[currentPlayer.position]
+
+        $(".player1-piece").detach().appendTo(`#cell-${currentPlayer.position}`);    
+        alert("" + die1 + " " + die2);
+  
+        if(currentCell.type === "property"){
+          $(".game-updates")
+            .append( 
+              `
+              <div class="cell-information">
+                <p>${currentCell.name}</p>
+                <p>Price: ${currentCell.price}</p>
+                <p>Rent: ${currentCell.rental}</p>
+                <div class="action-buttons">
+                  <button class="buy-property">Buy Property</button>
+                  <button class="bid-prperty">Bid Property</button>
+                </div>
+                <button class="end-turn">End Turn</button>
+              </div> 
+              `
+            )
+  
+        // $(".buy-property").click(  function( ) {
+        //   buyProperty(player, currentCell)
+        //   $(`#cell-${player.position} > .cell-color`).css("background-color", `${player.color}`)
+        // })
+  
+        } else if (currentCell.type === "chance"){
+          //invoke the chance function 
+          console.log('chance cell')
+          $(".game-updates")
+          .append(
+            `
+            <div class="chance">
+              <p>You've got chance</p>
+              <button class="end-turn">End Turn</button>
+            </div>
+            `
+          )
+  
+        } else if (currentCell.type === 'tax'){
+          //invoke the tax function
+          console.log('tax cell')
+        } else if (currentCell.type === "community"){
+          //invoke community chest
+        }
+  
+        $(".end-turn").click( function() {
+          $(".game-updates").detach();
+          currentPlayer.turn = false;
+          console.log('index is:  ' + i)
+          //players[i + 1].turn = true;
+          sumDices = 0;
+          $(".numbers").css("display", "none");
+        })
+
+      }
+    
+      }  /// each player loop
+    });
 });
+
+
     
 
-
 const rollDice = function () {
-    die1 = Math.floor( Math.random() * 6 ) + 1;
-    die2 = Math.floor( Math.random() * 6 ) + 1;
+  die1 = Math.floor( Math.random() * 6 ) + 1;
+  die2 = Math.floor( Math.random() * 6 ) + 1;
+  sumDices = die1 + die2;
 }
 
 const buyProperty = function(player, cell){
@@ -153,6 +146,86 @@ const buyProperty = function(player, cell){
   console.log(player)
 }
 
+const startGame = function(){
+  var numberOfPlayers = $("#player-number").val();
+  var player1 = new Player ('hat', $(`#player-1-name`).val(), $(`#player-1-color`).val(), true)
+  var player2 = new Player ('car', $(`#player-2-name`).val(), $(`#player-3-color`).val(), false)
+      
+  players.push(player1, player2)    
+  console.log(player1, player2)
+  $("#setup").css("display", "none");
+  $(".page-view").css("display", "block");
+}
+
+const die1Val = function () {
+  if( die1 === 1 ) {
+    $("#number-11").css("display", "block")
+  } else if ( die1 === 2 ) {
+    $("#number-21, #number-31").css("display", "block")
+  } else if ( die1 === 3) {
+    $("#number-11, #number-41, #number-51").css("display", "block")
+  }  else if ( die1 === 4) {
+    $("#number-41, #number-61, #number-51, #number-71").css("display", "block")
+  }   else if ( die1 === 5) {
+    $("#number-11, #number-41, #number-61, #number-51, #number-71").css("display", "block")
+  }   else if ( die1 === 6) {
+    $("#number-21, #number-31, #number-41, #number-61, #number-51, #number-71").css("display", "block")
+  // } else if ( die1 === 0 ) {
+  //   $()
+  } 
+}
+
+const die2Val = function () {
+  if( die2 === 1 ) {
+    $("#number-12").css("display", "block")
+  } else if ( die2 === 2 ) {
+    $("#number-22, #number-32").css("display", "block")
+  } else if ( die2 === 3) {
+      $("#number-12, #number-42, #number-52").css("display", "block")
+  }  else if ( die2 === 4) {
+      $("#number-42, #number-62, #number-52, #number-72").css("display", "block")
+  }  else if ( die2 === 5) {
+      $("#number-12, #number-42, #number-62, #number-52, #number-72").css("display", "block")
+  }  else if ( die2 === 6) {
+      $("#number-22, #number-32, #number-42, #number-62, #number-52, #number-72").css("display", "block")
+  };
+}
+
+const appendUpdatesProperty = function() {
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>Price: ${currentCell.price}</p>
+                        <p>Rent: ${currentCell.rental}</p>
+                        <div class="action-buttons">
+                          <button class="buy-property">Buy Property</button>
+                          <button class="bid-prperty">Bid Property</button>
+                        </div>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
+const appendUpdatesRest = function() {
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>Price: ${currentCell.price}</p>
+                        <p>Rent: ${currentCell.rental}</p>
+                        <div class="action-buttons">
+                          <button class="buy-property">Buy Property</button>
+                          <button class="bid-prperty">Bid Property</button>
+                        </div>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
 
 
 const board  =  [{
