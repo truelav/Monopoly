@@ -48,6 +48,7 @@ $(document).ready(function() {
   $( ".roll-dice" ).click(function() { 
     for (var i = 0; i < players.length; i++){
       if (players[i].turn){
+        console.log(i)
         rollDice();
 
         //update dices
@@ -97,13 +98,12 @@ $(document).ready(function() {
   
         $(".end-turn").click( function() {
           $(".game-updates").detach();
-          console.log(currentPlayer, nextPlayer)
           currentPlayer.turn = false;
           nextPlayer.turn = true;
           die1 = 0; die2 = 0;
+          console.log(currentPlayer, nextPlayer)
           die1Val();
           die2Val();
-         // $(".numbers").css("display", "none");
         })
 
       } // check if the player's turn is true
