@@ -46,70 +46,63 @@ $(document).ready(function() {
   })
 
   $( ".roll-dice" ).click(function() { 
-    for (var i = 0; i < players.length; i++){
-      if (players[i].turn){
-        console.log(i)
-        rollDice();
+    rollDice();
+    var nextPlayer;
+    var currentPlayer = players.filter( function(player, index){
+      return player.turn === true;
+    })[0]
+    //update dices
+    die1Val();
+    die2Val();
 
-        //update dices
-        die1Val();
-        die2Val();
+    //updating the player position
+    let tempPosition = currentPlayer.position;
+    currentPlayer.position = (sumDices + tempPosition);
 
-        currentPlayer = players[i]
-        if (i === players.length - 1){
-          nextPlayer = players[0]
-        } else {
-          nextPlayer = players[i + 1]
-        }
+    //check if you made a whole trip
+    if ( currentPlayer.position > 39 ) {
+        currentPlayer.position = currentCell.position - 40;
+    }
+    console.log(currentPlayer)
+    currentCell = board[currentPlayer.position]
 
+    $(".player1-piece").detach().appendTo(`#cell-${currentPlayer.position}`);    
+    alert("" + die1 + " " + die2);
 
-        //updating the player position
-        let tempPosition = currentPlayer.position;
-        currentPlayer.position = (sumDices + tempPosition);
+    if(currentCell.type === "property"){
+      appendUpdatesProperty()
 
-        //check if you made a whole trip
-        if ( currentPlayer.position > 39 ) {
-            currentPlayer.position = currentCell.position - 40;
-        }
+    $(".buy-property").click(  function( ) {
+      buyProperty(currentPlayer, currentCell)
+      $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
+    })
 
-        currentCell = board[currentPlayer.position]
+    } else if (currentCell.type === "chance"){
+      //invoke the chance function 
+      appendUpdatesRest()
 
-        $(".player1-piece").detach().appendTo(`#cell-${currentPlayer.position}`);    
-        alert("" + die1 + " " + die2);
-  
-        if(currentCell.type === "property"){
-          appendUpdatesProperty()
+    } else if (currentCell.type === 'tax'){
+      //invoke the tax function
+      appendUpdatesRest()
+    } else if (currentCell.type === "community"){
+      appendUpdatesRest()
+    }
 
-        $(".buy-property").click(  function( ) {
-          buyProperty(currentPlayer, currentCell)
-          $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
-        })
-  
-        } else if (currentCell.type === "chance"){
-          //invoke the chance function 
-          appendUpdatesRest()
-  
-        } else if (currentCell.type === 'tax'){
-          //invoke the tax function
-          appendUpdatesRest()
-        } else if (currentCell.type === "community"){
-          appendUpdatesRest()
-        }
-  
-        $(".end-turn").click( function() {
-          $(".game-updates").detach();
-          currentPlayer.turn = false;
-          nextPlayer.turn = true;
-          die1 = 0; die2 = 0;
-          console.log(currentPlayer, nextPlayer)
-          die1Val();
-          die2Val();
-        })
-
-      } // check if the player's turn is true
-    
-    }  /// each player loop
-
+    $(".end-turn").click( function() {
+      // players.forEach( (player, index) => {
+      //   if (player.turn){
+      //     players[index + 1].turn = true;
+      //     player.turn = false
+      //   }
+      // })
+      // currentPlayer.turn = false;
+      // nextPlayer.turn = true;
+      die1 = 0; die2 = 0;
+      $(".game-updates").detach();
+      console.log(players)
+      die1Val();
+      die2Val();
+    })
   });
 });
 
@@ -233,6 +226,15 @@ const payLuxuryTax = function(player){
 const communityChest = function(player){
   var chestCard = communityChestCards[Math.floor( Math.random() * 10 )]
   chestCard.action(player) 
+}
+
+const chance = function(player){
+  var chanceCard = chanceCards[Math.floor(Math.random() * 10)]
+  chanceCard.action(player);
+}
+
+const updatePlayerTurn = function(player){
+  
 }
 
 
