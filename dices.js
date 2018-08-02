@@ -10,7 +10,7 @@ var nextPlayer;
 var numberOfPlayers;
 
 
-const Player = function (piece, name, color, turn) {
+const Player = function (piece, name, color, turn, piece) {
   this.cell = 0;
   this.name = name;
   this.piece = piece;
@@ -72,7 +72,7 @@ $(document).ready(function() {
     }
     currentCell = board[currentPlayer.position]
 
-    $(".player1-piece").detach().appendTo(`#cell-${currentPlayer.position}`);    
+    $(`.${currentPlayer.piece}`).detach().appendTo(`#cell-${currentPlayer.position}`);    
     alert("" + die1 + " " + die2);
 
     if(currentCell.type === "property"){
@@ -128,8 +128,8 @@ const buyProperty = function(player, cell){
 
 const startGame = function(){
   numberOfPlayers = $("#player-number").val();
-  var player11 = new Player ('hat', $(`#player-1-name`).val(), $(`#player-1-color`).val(), true)
-  var player22 = new Player ('car', $(`#player-2-name`).val(), $(`#player-3-color`).val(), false)
+  var player11 = new Player ('hat', $(`#player-1-name`).val(), $(`#player-1-color`).val(), true, 'player1-piece')
+  var player22 = new Player ('car', $(`#player-2-name`).val(), $(`#player-3-color`).val(), false, 'player2-piece')
   players.player1 = player11
   players.player2 = player22
   $("#setup").css("display", "none");
