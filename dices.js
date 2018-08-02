@@ -23,7 +23,7 @@ const Player = function (piece, name, color, turn) {
   this.position = 0;
 }
 
-const players = [];
+const players = {};
 const pieces = ['hat', 'show', 'iron'];
 
 $(document).ready(function() {
@@ -43,17 +43,24 @@ $(document).ready(function() {
 
   $(".start-game").click(function(){
     startGame()
+    console.log(players);
   })
 
   $( ".roll-dice" ).click(function() { 
     rollDice();
-    var nextPlayer;
-    var currentPlayer = players.filter( function(player, index){
-      return player.turn === true;
-    })[0]
     //update dices
     die1Val();
     die2Val();
+
+    if (players.player1.turn){
+      var currentPlayer = players.player1;
+      var nextPlayer = players.player2;
+      console.log('the current player is: ' + currentPlayer.name)
+    } else if (players.player2.turn) {
+      var currentPlayer = players.player2;
+      var nextPlayer = players.player1;
+      console.log('the current player is: ' + currentPlayer.name)
+    }
 
     //updating the player position
     let tempPosition = currentPlayer.position;
@@ -63,7 +70,6 @@ $(document).ready(function() {
     if ( currentPlayer.position > 39 ) {
         currentPlayer.position = currentCell.position - 40;
     }
-    console.log(currentPlayer)
     currentCell = board[currentPlayer.position]
 
     $(".player1-piece").detach().appendTo(`#cell-${currentPlayer.position}`);    
@@ -72,34 +78,28 @@ $(document).ready(function() {
     if(currentCell.type === "property"){
       appendUpdatesProperty()
 
-    $(".buy-property").click(  function( ) {
-      buyProperty(currentPlayer, currentCell)
-      $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
-    })
+      $(".buy-property").click(  function( ) {
+        buyProperty(currentPlayer, currentCell)
+        $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
+      })
 
     } else if (currentCell.type === "chance"){
       //invoke the chance function 
       appendUpdatesRest()
-
     } else if (currentCell.type === 'tax'){
       //invoke the tax function
       appendUpdatesRest()
     } else if (currentCell.type === "community"){
       appendUpdatesRest()
+    } else {
+      appendUpdatesRest();
     }
 
     $(".end-turn").click( function() {
-      // players.forEach( (player, index) => {
-      //   if (player.turn){
-      //     players[index + 1].turn = true;
-      //     player.turn = false
-      //   }
-      // })
-      // currentPlayer.turn = false;
-      // nextPlayer.turn = true;
+      currentPlayer.turn = false;
+      nextPlayer.turn = true;
       die1 = 0; die2 = 0;
-      $(".game-updates").detach();
-      console.log(players)
+      $(".cell-information").detach();
       die1Val();
       die2Val();
     })
@@ -128,10 +128,10 @@ const buyProperty = function(player, cell){
 
 const startGame = function(){
   numberOfPlayers = $("#player-number").val();
-  var player1 = new Player ('hat', $(`#player-1-name`).val(), $(`#player-1-color`).val(), true)
-  var player2 = new Player ('car', $(`#player-2-name`).val(), $(`#player-3-color`).val(), false)
-      
-  players.push(player1, player2)    
+  var player11 = new Player ('hat', $(`#player-1-name`).val(), $(`#player-1-color`).val(), true)
+  var player22 = new Player ('car', $(`#player-2-name`).val(), $(`#player-3-color`).val(), false)
+  players.player1 = player11
+  players.player2 = player22
   $("#setup").css("display", "none");
   $(".page-view").css("display", "block");
 }
@@ -202,6 +202,19 @@ const appendUpdatesRest = function() {
                     )
 }
 
+const appendUpdateJail = function(){
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>You have landed on Jail</p>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
 const appendChanceAndCommunity = function(cell) {
   $(".game-updates")
                     .append( 
@@ -233,9 +246,9 @@ const chance = function(player){
   chanceCard.action(player);
 }
 
-const updatePlayerTurn = function(player){
-  
-}
+// const updatePlayerTurn = function(player){
+
+// }
 
 
 const board  =  [{
