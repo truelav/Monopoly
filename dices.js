@@ -250,6 +250,8 @@ const chance = function(player){
 
 // }
 
+//need to start making the logic when players are paying rent and give them money when they cross the cell number 0
+
 
 const board  =  [{
     name: "Go",
