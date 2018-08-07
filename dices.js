@@ -246,6 +246,16 @@ const chance = function(player){
   chanceCard.action(player);
 }
 
+const checkCellForRent = function(player, cell){
+  if(cell.owned){
+    //need to check to which player does it belong to and give rent to him, probably owne property needs to 
+    //changed when property has been bought
+  } else {
+    //continue
+    //return false
+    return false
+  }
+}
 // const updatePlayerTurn = function(player){
 
 // }
