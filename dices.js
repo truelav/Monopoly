@@ -8,6 +8,8 @@ var currentCell;
 var currentPlayer;
 var nextPlayer;
 var numberOfPlayers;
+var currentChanceCard;
+var currentCommunityChest;
 
 
 const Player = function (piece, name, color, turn, piece) {
@@ -86,11 +88,13 @@ $(document).ready(function() {
     } else if (currentCell.type === "chance"){
       //invoke the chance function 
       appendUpdatesRest()
+      chance(currentPlayer);
     } else if (currentCell.type === 'tax'){
       //invoke the tax function
       appendUpdatesRest()
     } else if (currentCell.type === "community"){
       appendUpdatesRest()
+      communityChest(currentPlayer)
     } else {
       appendUpdatesRest();
     }
@@ -110,9 +114,10 @@ $(document).ready(function() {
     
 
 const rollDice = function () {
-  die1 = Math.floor( Math.random() * 6 ) + 1;
-  die2 = Math.floor( Math.random() * 6 ) + 1;
-  sumDices = die1 + die2;
+  // die1 = Math.floor( Math.random() * 6 ) + 1;
+  // die2 = Math.floor( Math.random() * 6 ) + 1;
+  // sumDices = die1 + die2;
+  sumDices =  7;
 }
 
 const buyProperty = function(player, cell){
@@ -124,7 +129,7 @@ const buyProperty = function(player, cell){
     console.log('property is owned by another player play rent')
     player.money -= cell.rent[0]
   } 
-  console.log(cell)
+  console.log(cell, player)
 }
 
 const startGame = function(){
@@ -238,13 +243,16 @@ const payLuxuryTax = function(player){
 }
 
 const communityChest = function(player){
-  var chestCard = communityChestCards[Math.floor( Math.random() * 10 )]
-  chestCard.action(player) 
+  currentCommunityChest= communityChestCards[Math.floor( Math.random() * 10 )]
+  currentCommunityChest.action(player) 
 }
 
 const chance = function(player){
-  var chanceCard = chanceCards[Math.floor(Math.random() * 10)]
-  chanceCard.action(player);
+  console.log('before: ' + player.money)
+  currentChanceCard = chanceCards[Math.floor(Math.random() * 3)]
+  currentChanceCard.action(player);
+  console.log(currentChanceCard.name)
+  console.log('after ' + player.money)
 }
 
 const checkCellForRent = function(player, cell){
@@ -260,6 +268,10 @@ const checkCellForRent = function(player, cell){
     //return false
     return false
   }
+}
+
+const goToJail = function() {
+
 }
 // const updatePlayerTurn = function(player){
 
@@ -559,7 +571,28 @@ const communityChestCards = [
 
 const chanceCards = [
   {
-
+    name: 'You have won $100',
+    action: function(player){
+      player.money += 100
+    }
+  }, 
+  {
+    name: 'You have lost $100',
+    action: function(player){
+      player.money -= 100
+    }
+  },
+  {
+    name: 'You have won $100',
+    action: function(player){
+      player.money += 100
+    }
+  }, 
+  {
+    name: 'You have lost $100',
+    action: function(player){
+      player.money -= 100
+    }
   }
 ]
 
