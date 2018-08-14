@@ -114,10 +114,10 @@ $(document).ready(function() {
     
 
 const rollDice = function () {
-  // die1 = Math.floor( Math.random() * 6 ) + 1;
-  // die2 = Math.floor( Math.random() * 6 ) + 1;
-  // sumDices = die1 + die2;
-  sumDices =  7;
+  die1 = Math.floor( Math.random() * 6 ) + 1;
+  die2 = Math.floor( Math.random() * 6 ) + 1;
+  sumDices = die1 + die2;
+  //sumDices =  5;
 }
 
 const buyProperty = function(player, cell){
@@ -125,10 +125,11 @@ const buyProperty = function(player, cell){
     cell.owned = player.piece.slice(0,7);
     player.money -= cell.price;
     player.property.push( cell )
+    //appendFacilityProperty(player);
   } else if (cell.type === 'property' && cell.owned){
     console.log('property is owned by another player play rent')
     player.money -= cell.rent[0]
-  } 
+  }
   console.log(cell, player)
 }
 
@@ -140,6 +141,10 @@ const startGame = function(){
   players.player2 = player22
   $("#setup").css("display", "none");
   $(".page-view").css("display", "block");
+}
+
+const buyFacilityProperty = function(player, cell){
+
 }
 
 const die1Val = function () {
@@ -206,6 +211,10 @@ const appendUpdatesRest = function() {
                       </div> 
                       `
                     )
+}
+
+const appendFacilityProperty = function(player) {
+  $(`#cell-${player.position}`).css("background-color", `${player.color}`)
 }
 
 const appendUpdateJail = function(){

@@ -84,15 +84,28 @@ body {
     justify-content: center;
   }
 
-  /* .rotate-cell {
-    -webkit-transform: rotate(90deg); 
-  } */
-  .left-square-11 {
-    display: flex;
-    justify-content: center;
+  .left-square > p {
+    writing-mode: vertical-lr;
+    text-align: center;
   }
 
-  .cell-color-left {
+  .right-square > p {
+    writing-mode: vertical-lr;
+    text-align: center;
+    transform: rotate(180deg);
+  }
+
+  .right-square {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .left-square {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cell-color-left, .cell-color-right {
     width: 20%;
     height: 100%;
     background-color: gray;
@@ -104,10 +117,6 @@ body {
 
   #setup {
     margin: 15px;
-  }
-
-  .show-players {
-    /* display: none; */
   }
 
   #player-3-input, #player-4-input {
