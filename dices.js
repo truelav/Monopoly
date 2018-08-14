@@ -82,13 +82,20 @@ $(document).ready(function() {
 
       $(".buy-property").click(  function( ) {
         buyProperty(currentPlayer, currentCell)
-        $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
+        if (currentPlayer.position >= 11 && currentPlayer.position <= 19){
+          $(`#cell-${currentPlayer.position} > .cell-color-left`).css("background-color", `${currentPlayer.color}`)
+        } else if (currentPlayer.position >= 31 && currentPlayer.position <= 39){
+          $(`#cell-${currentPlayer.position} > .cell-color-right`).css("background-color", `${currentPlayer.color}`)
+        } else {
+          $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
+        }
       })
 
     } else if (currentCell.type === "chance"){
       //invoke the chance function 
-      appendUpdatesRest()
+      console.log(chance)
       chance(currentPlayer);
+      appendChanceAndCommunity();
     } else if (currentCell.type === 'tax'){
       //invoke the tax function
       appendUpdatesRest()
@@ -117,7 +124,7 @@ const rollDice = function () {
   die1 = Math.floor( Math.random() * 6 ) + 1;
   die2 = Math.floor( Math.random() * 6 ) + 1;
   sumDices = die1 + die2;
-  //sumDices =  5;
+  sumDices =  7;
 }
 
 const buyProperty = function(player, cell){
@@ -236,6 +243,7 @@ const appendChanceAndCommunity = function(cell) {
                       `
                       <div class="cell-information">
                         <p>${currentCell.name}</p>
+                        <p>${currentChanceCard.name}</p>
                         <button class="end-turn">End Turn</button>
                       </div> 
                       `
