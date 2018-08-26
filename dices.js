@@ -1,5 +1,3 @@
-
-
 let die1;
 let die2;
 let sumDices;
@@ -117,13 +115,14 @@ const rollDice = function () {
 
 const buyProperty = function(player, cell){
   if(cell.type === 'property' && !cell.owned && player.money > cell.price){
-    cell.owned = player.name;
+    cell.owned = player.piece.slice(0,7);
     player.money -= cell.price;
     player.property.push( cell )
   } else if (cell.type === 'property' && cell.owned){
     console.log('property is owned by another player play rent')
     player.money -= cell.rent[0]
   } 
+  console.log(cell)
 }
 
 const startGame = function(){
@@ -246,9 +245,25 @@ const chance = function(player){
   chanceCard.action(player);
 }
 
+const checkCellForRent = function(player, cell){
+  if(cell.owned){
+    //need to check to which player does it belong to and give rent to him, probably owne property needs to 
+    //changed when property has been bought
+    player.money -= cell.rent[0]
+    players[cell.owned].money += cell.rent[0]
+    console.log('check if both players money have been updated')
+    //plus we need check for how many properties the player owes so we can get the correct rent;
+  } else {
+    //continue
+    //return false
+    return false
+  }
+}
 // const updatePlayerTurn = function(player){
 
 // }
+
+//need to start making the logic when players are paying rent and give them money when they cross the cell number 0
 
 
 const board  =  [{
@@ -545,3 +560,18 @@ const chanceCards = [
 
   }
 ]
+
+//players data structure look like this :
+
+// players = {
+//   player1: {
+//     name: 'vasilica',
+//     cell: 0,
+//     property: []
+//   },
+//   player2: {
+//     name: 'patlajica',
+//     cell: 0,
+//     property: []
+//   }
+// }
