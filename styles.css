@@ -66,11 +66,11 @@ body {
   }
   
   .cell-writting-left {
+    display: flex;
+    justify-content: space-between;
     text-align: center;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    display: flex;
-    justify-content: space-between;
   }
 
   .cell-writting-right {
