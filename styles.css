@@ -133,5 +133,6 @@ body {
     display:none;
   }
   .board-pic{
+    position: relative;
     z-index: -1;
   }
