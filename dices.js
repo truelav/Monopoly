@@ -9,6 +9,8 @@ var numberOfPlayers;
 var currentChanceCard;
 var currentCommunityChest;
 
+const players = {};
+const pieces = ['hat', 'show', 'iron'];
 
 const Player = function (piece, name, color, turn, piece) {
   this.cell = 0;
@@ -23,8 +25,6 @@ const Player = function (piece, name, color, turn, piece) {
   this.position = 0;
 }
 
-const players = {};
-const pieces = ['hat', 'show', 'iron'];
 
 $(document).ready(function() {
 
@@ -46,12 +46,18 @@ $(document).ready(function() {
     console.log(players);
   })
 
+  // const checkPlayerTurn = function(){
+   
+  // }
+
   $( ".roll-dice" ).click(function() { 
     rollDice();
     //update dices
     die1Val();
     die2Val();
 
+    //check what player's turn is now
+    //checkPlayerTurn();
     if (players.player1.turn){
       var currentPlayer = players.player1;
       var nextPlayer = players.player2;
@@ -63,8 +69,10 @@ $(document).ready(function() {
     }
 
     //updating the player position
-    let tempPosition = currentPlayer.position;
-    currentPlayer.position = (sumDices + tempPosition);
+
+    updatePlayerPosition(currentPlayer, sumDices);
+    // let tempPosition = currentPlayer.position;
+    // currentPlayer.position = (sumDices + tempPosition);
 
     //check if you made a whole trip
     if ( currentPlayer.position > 39 ) {
@@ -107,22 +115,25 @@ $(document).ready(function() {
     $(".end-turn").click( function() {
       currentPlayer.turn = false;
       nextPlayer.turn = true;
-      die1 = 0; die2 = 0;
-      $(".cell-information").detach();
-      die1Val();
-      die2Val();
+      resetDices();
     })
   });
 });
 
 
-    
+const resetDices = function(){
+  die1 = 0; 
+  die2 = 0;
+  $(".cell-information").hide();
+  die1Val();
+  die2Val();
+}
 
 const rollDice = function () {
   die1 = Math.floor( Math.random() * 6 ) + 1;
   die2 = Math.floor( Math.random() * 6 ) + 1;
   sumDices = die1 + die2;
-  sumDices =  7;
+  // sumDices =  7;
 }
 
 const buyProperty = function(player, cell){
@@ -265,18 +276,7 @@ const payLuxuryTax = function(player){
   player.money -= 75;
 }
 
-const communityChest = function(player){
-  currentCommunityChest= communityChestCards[Math.floor( Math.random() * 10 )]
-  currentCommunityChest.action(player) 
-}
 
-const chance = function(player){
-  console.log('before: ' + player.money)
-  currentChanceCard = chanceCards[Math.floor(Math.random() * 3)]
-  currentChanceCard.action(player);
-  console.log(currentChanceCard.name)
-  console.log('after ' + player.money)
-}
 
 const checkCellForRent = function(player, cell){
   if(cell.owned){
@@ -293,97 +293,7 @@ const checkCellForRent = function(player, cell){
   }
 }
 
-const goToJail = function() {
 
-}
-// const updatePlayerTurn = function(player){
-
-// }
-
-//need to start making the logic when players are paying rent and give them money when they cross the cell number 0
-
-
-
-const communityChestCards = [
-  {
-    name: "Get out of the jail",
-    action: function(player){
-      player.getOutOfJail = true;
-    }
-  }, {
-    name: "you have won beauty contest collect $10",
-    action: function(player){
-      player.money += 10;
-    }
-  }, {
-    name: "from stock exchange you get $50, collect $50",
-    action: function(player){
-      player.money += 50;
-    }
-  }, {
-    name: "Life insurance matures, collect $100",
-    action: function(player){
-      player.money += 100;
-    }
-  }, {
-    name: "Income tax refund collect $20",
-    action: function(player){
-      player.money += 20;
-    }
-  }, {
-    name: "Holiday fund matures, collect $100",
-    action: function(player){
-      player.money += 100;
-    }
-  }, {
-    name: "You inherit $100",
-    action: function(player){
-      player.money += 100;
-    }
-  }, {
-    name: "Receive $25 consultancy fee",
-    action: function(player){
-      player.money += 25;
-    }
-  }, {
-    name: "Pay your due bills equal to $100",
-    action: function(player){
-      player.money -= 100;
-    }
-  },  {
-    name: "Bank error, you loose $50",
-    action: function(player){
-      player.money -= 50;
-    }
-  }
-]
-
-const chanceCards = [
-  {
-    name: 'You have won $100',
-    action: function(player){
-      player.money += 100
-    }
-  }, 
-  {
-    name: 'You have lost $100',
-    action: function(player){
-      player.money -= 100
-    }
-  },
-  {
-    name: 'You have won $100',
-    action: function(player){
-      player.money += 100
-    }
-  }, 
-  {
-    name: 'You have lost $100',
-    action: function(player){
-      player.money -= 100
-    }
-  }
-]
 
 //players data structure look like this :
 

@@ -7,7 +7,9 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Monopoly</title>
+    <script src="player.js"></script>
     <script src="dices.js"></script>
+    <script src="cards.js"></script>
     <script src="setup.js"></script>
     <script src="board.js"></script>
     <LINK href="styles.css" rel="stylesheet" type="text/css">
@@ -18,7 +20,7 @@
           
           <div class="top-row">
             <div class="top-square square-1" id="cell-20">
-              <img src="pics/parking.jpg" alt="parking" border="0" width="130">
+              <img src="pics/parking.jpg" alt="parking" border="0" width="130" id="cell-images">
             </div>
             <div class="top-square square-2" id="cell-21">
               <div class="cell-color"></div>
@@ -26,7 +28,7 @@
               <p> Price $220 </p>
             </div>
             <div class="top-square square-3" id="cell-22">
-              <img src="pics/chance.jpg" alt="community" border="0" width="75">
+              <img src="pics/chance.jpg" alt="community" border="0" width="75" id="cell-images">
             </div>
             <div class="top-square square-4" id="cell-23">
               <div class="cell-color">
@@ -41,7 +43,7 @@
               <p> Price $240 </p>
             </div>
             <div class="top-square square-6" id="cell-25">
-              <img src="pics/BO.jpg" alt="community" border="0" width="75">
+              <img src="pics/BO.jpg" alt="community" border="0" width="75" id="cell-images">
             </div>
             <div class="top-square square-7" id="cell-26">
               <div class="cell-color"> 
@@ -56,7 +58,7 @@
               <p> Price $260 </p>
             </div>
             <div class="top-square square-9" id="cell-28">
-              <img src="pics/water.jpg" alt="community" border="0" width="75">
+              <img src="pics/water.jpg" alt="community" border="0" width="75" id="cell-images">
             </div>
             <div class="top-square square-8" id="cell-29">
               <div class="cell-color"></div>
@@ -64,7 +66,7 @@
               <p> Price $280 </p>
             </div>
             <div class="top-square square-10" id="cell-30">
-                <img src="pics/jail2.jpg" alt="jail2" border="0" width="130">
+                <img src="pics/jail2.jpg" alt="jail2" border="0" width="130" id="cell-images">
             </div>
           </div>
           
@@ -82,7 +84,7 @@
                   <div class="cell-color-left"></div>
                 </div>
                 <div class="left-square square-4" id="cell-17">
-                    <img src="pics/community2.jpg" alt="community" border="0" height="75">
+                    <img src="pics/community2.jpg" alt="community" border="0" height="75" id="cell-images">
                 </div>
                 <div class="left-square square-5" id="cell-16">
                   <p> Price $180 </p>
@@ -90,7 +92,7 @@
                   <div class="cell-color-left"></div>
                 </div>
                 <div class="left-square square-6" id="cell-15">
-                    <img src="pics/penssylvania.jpg" alt="community" border="0" height="75">
+                    <img src="pics/penssylvania.jpg" alt="community" border="0" height="75" id="cell-images">
                 </div>
                 <div class="left-square square-7" id="cell-14">
                   <p> Price $160 </p>
@@ -104,7 +106,7 @@
                 </div>
 
                 <div class="left-square square-9" id="cell-12">
-                  <img src="pics/electric.jpg" alt="community" border="0" height="75">
+                  <img src="pics/electric.jpg" alt="community" border="0" height="75" id="cell-images">
                 </div>
 
                 <div class="left-square left-square-11" id="cell-11">
@@ -175,7 +177,7 @@
                   <p> Price $300 </p>
                 </div>
                 <div class="right-square square-4" id="cell-33">
-                    <img src="pics/community3.jpg" alt="community" border="0" height="75">
+                    <img src="pics/community3.jpg" alt="community" border="0" height="75" id="cell-images">
                 </div>
                 <div class="right-square square-5" id="cell-34">
                   <div class="cell-color-right"></div>
@@ -183,10 +185,10 @@
                   <p> Price $320 </p>
                 </div>
                 <div class="right-square square-6" id="cell-35">
-                    <img src="pics/short.jpg" alt="community" border="0" height="75">
+                    <img src="pics/short.jpg" alt="community" border="0" height="75" id="cell-images">
                 </div>
                 <div class="right-square square-7" id="cell-36">
-                  <img src="pics/chance3.jpg" alt="community" border="0" height="75">
+                  <img src="pics/chance3.jpg" alt="community" border="0" height="75" id="cell-images">
                 </div>
                 <div class="right-square square-8" id="cell-37">
                   <div class="cell-color-right"></div>
@@ -194,7 +196,7 @@
                   <p> Price $350 </p>
                 </div>
                 <div class="right-square square-9" id="cell-38">
-                  <img src="pics/tax.jpg" alt="community" border="0" height="75">
+                  <img src="pics/tax.jpg" alt="community" border="0" height="75" id="cell-images">
                 </div>
                 <div class="left-square square-11" id="cell-39">
                   <div class="cell-color-right"></div>
@@ -209,7 +211,7 @@
           <div class="bottom-row">
             <div class="bottom-square square-1" id="cell-10">
               <div>
-                <img src="https://thumb.ibb.co/i8e0hT/jail2.jpg" alt="jail-2" border="0" width="130" class="board-pic">
+                <img src="https://thumb.ibb.co/i8e0hT/jail2.jpg" alt="jail-2" border="0" width="130" class="board-pic" id="cell-images">
               </div>
             </div>
             <div class="bottom-square square-2" id="cell-9">
