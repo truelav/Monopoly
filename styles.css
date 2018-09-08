@@ -122,3 +122,17 @@ body {
   #player-3-input, #player-4-input {
     display:none;
   }
+
+  #cell-2, #cell-4, #cell-5, #cell-7{
+    z-index: 0;
+  }
+
+  #player-piece {
+    z-index: 100;
+    margin: 10px;
+    padding: 10px;
+  }
+
+  #cell-images {
+    z-index: -1;
+  }
