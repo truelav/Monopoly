@@ -50,8 +50,7 @@ $(document).ready(function() {
     //updating the current cell and all the properties
     currentCell = board[currentPlayer.position]
     //updateCurrentCell(currentCell, currentPlayer);
-    console.log(currentCell);
-    
+
     //check if you made a whole trip
     checkPlayerFullCycle(currentPlayer);
 
@@ -62,40 +61,11 @@ $(document).ready(function() {
     //check the type of property
     checkTypeOfProperty(currentCell, currentPlayer);
 
-    // if(currentCell.type === "property"){
-    //   appendUpdatesProperty()
-
-    //   $(".buy-property").click(  function( ) {
-    //     buyProperty(currentPlayer, currentCell)
-    //     if (currentPlayer.position >= 11 && currentPlayer.position <= 19){
-    //       $(`#cell-${currentPlayer.position} > .cell-color-left`).css("background-color", `${currentPlayer.color}`)
-    //     } else if (currentPlayer.position >= 31 && currentPlayer.position <= 39){
-    //       $(`#cell-${currentPlayer.position} > .cell-color-right`).css("background-color", `${currentPlayer.color}`)
-    //     } else {
-    //       $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
-    //     }
-    //   })
-
-    // } else if (currentCell.type === "chance"){
-    //   //invoke the chance function 
-    //   chanceCard(currentPlayer);
-    //   appendChance();
-    //   console.log(currentPlayer)
-    // } else if (currentCell.type === 'tax'){
-    //   //invoke the tax function
-    //   appendUpdatesRest()
-    // } else if (currentCell.type === "community"){
-    //   console.log(currentPlayer)
-    //   communityCard(currentPlayer);
-    //   appendCommunity();
-    // } else {
-    //   appendUpdatesRest();
-    // }
-
     $(".end-turn").click( function() {
       endTurn(currentPlayer, nextPlayer)
       resetDices();
       showRollDiceButton(); 
+      showBuyPropertyButton();
     })
 
   });
@@ -117,8 +87,22 @@ const buyFacilityProperty = function(player, cell){
 }
 
 
-const appendUpdatesProperty = function() {
-  $(".game-updates")
+const appendUpdatesProperty = function(cell) {
+  
+    if (cell.owned){
+        $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>You landed on square that is owned by: ${currentCell.owned}</p>
+                        <p>Pay rent amounting: ${currentCell.rental[0]} </p>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+    } else {
+        $(".game-updates")
                     .append( 
                       `
                       <div class="cell-information">
@@ -133,6 +117,7 @@ const appendUpdatesProperty = function() {
                       </div> 
                       `
                     )
+    }
 }
 
 const appendGamesUpdates = function() {
@@ -143,33 +128,37 @@ const appendGamesUpdates = function() {
   
 }
 
-const appendUpdatesRest = function() {
-  $(".game-updates")
-                    .append( 
-                      `
-                      <div class="cell-information">
-                        <p>${currentCell.name}</p>
-                        <button class="end-turn">End Turn</button>
-                      </div> 
-                      `
-                    )
-}
 
 const appendFacilityProperty = function(player) {
   $(`#cell-${player.position}`).css("background-color", `${player.color}`)
 }
 
-const appendUpdateJail = function(){
+const appendLandOnJail = function(){
   $(".game-updates")
                     .append( 
                       `
-                      <div class="cell-information">
-                        <p>${currentCell.name}</p>
-                        <p>You have landed on Jail</p>
-                        <button class="end-turn">End Turn</button>
-                      </div> 
+                        <div class="cell-information">
+                            <p>${currentCell.name}</p>
+                            <p>You have landed on Jail</p>
+                            <p>Gonna have to skip next move</p>
+                            <button class="end-turn">End Turn</button>
+                        </div> 
                       `
                     )
+}
+
+const appendLandOnParking = function(){
+    $(".game-updates")
+                        .append(
+                            `
+                                <div class="cell-information">
+                                    <p>${currentCell.name}</p>
+                                    <p>You have landed on parking square</p>
+                                    <p>Just Rest until next move</p>
+                                    <button class="end-turn">End Turn</button>
+                                </div>
+                            `
+                        )
 }
 
 const appendChance = function(cell) {
@@ -213,24 +202,9 @@ const hideBuyPropertyButton = function(){
 const showBuyPropertyButton = function(){
     $(".buy-property").show();
 }
+
 // const updateCurrentCell = function(cell, player){
 //     cell = board[player.position]
 //     async issue wont update currentCell before im using it
 // }
-
-
-const checkCellForRent = function(player, cell){
-  if(cell.owned){
-    //need to check to which player does it belong to and give rent to him, probably owne property needs to 
-    //changed when property has been bought
-    player.money -= cell.rent[0]
-    players[cell.owned].money += cell.rent[0]
-    console.log('check if both players money have been updated')
-    //plus we need check for how many properties the player owes so we can get the correct rent;
-  } else {
-    //continue
-    //return false
-    return false
-  }
-}
 

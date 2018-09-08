@@ -12,9 +12,9 @@ const checkPlayerFullCycle = function(player){
 
 const checkTypeOfProperty = function(cell, player){  
     if (cell.type === "property"){
-        appendUpdatesProperty()
+        appendUpdatesProperty(cell)
     
-        $(".buy-property").click(  function(){
+        $(".buy-property").click( function(){
           buyProperty(player, cell)
           if (player.position >= 11 && player.position <= 19){
             $(`#cell-${player.position} > .cell-color-left`).css("background-color", `${player.color}`)
@@ -24,19 +24,42 @@ const checkTypeOfProperty = function(cell, player){
             $(`#cell-${player.position} > .cell-color`).css("background-color", `${player.color}`)
           }
           //also if player bought the property we need to hide the buy button or trade if the property dont belong to him yet
-
         })
-      } else if (cell.type === "chance"){
+
+    } else if (cell.type === "chance"){
         //invoke the chance function 
         chanceCard(player);
         appendChance();
-      } else if (cell.type === 'tax'){
+    } else if (cell.type === 'tax'){
         //invoke the tax function
         appendUpdatesRest()
-      } else if (cell.type === "community"){
+    } else if (cell.type === "community"){
         communityCard(player);
         appendCommunity();
-      } else {
-        appendUpdatesRest();
-      }
+    } else if (cell.type === "utility") {
+        apendUpdatesProperty(cell);
+    
+        $(".buy-property").click( function(){
+            buyProperty(player, cell)
+            //also if player bought the property we need to hide the buy button or trade if the property dont belong to him yet
+        })
+
+    } else if (cell.type === "railroad"){
+        appendUpdatesProperty(cell);
+    
+        $(".buy-property").click( function(){
+            buyProperty(player, cell)
+            //also if player bought the property we need to hide the buy button or trade if the property dont belong to him yet
+        })
+    }
+}
+
+const checkToPayRent = function(){
+
+}
+
+const checkIfCellOwnedByPlayer = function(player, cell){
+    if (cell.owned){
+        
+    }
 }

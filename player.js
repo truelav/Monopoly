@@ -71,14 +71,17 @@ const payIncomeTax = function(player){
 
   
 const buyProperty = function(player, cell){
-    if(cell.type === 'property' && !cell.owned && player.money > cell.price){
-        cell.owned = player.piece.slice(0,7);
+    if (cell.type === 'property' && !cell.owned && player.money > cell.price){
+        console.log(player.name)
+        board[player.position].owned = player.name
         player.money -= cell.price;
-        player.property.push( cell )
+        hideBuyPropertyButton();
+        //player.property.push( cell )
         //appendFacilityProperty(player);
     } else if (cell.type === 'property' && cell.owned){
         console.log('property is owned by another player play rent')
-        player.money -= cell.rent[0]
+        hideBuyPropertyButton();
+        //player.money -= cell.rent[0]
     }
     console.log(cell, player)
 }

@@ -70,6 +70,7 @@ const board  =  [{
   },{
     name: "ELECTRIC COMPANY",
     price: 150,
+    rental: [100, 200],
     type: "utility",
     owned: false
   },{
@@ -167,6 +168,7 @@ const board  =  [{
   },{
     name: "WATER WORKS",
     price: 150,
+    rental: [ 100, 200],
     type: "utility",
     owned: false
   },{
