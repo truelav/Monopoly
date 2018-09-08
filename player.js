@@ -1,3 +1,16 @@
+const Player = function (piece, name, color, turn, piece) {
+    this.cell = 0;
+    this.name = name;
+    this.piece = piece;
+    this.color = color;
+    this.money = 1500;
+    this.inJail = false;
+    this.property = [];
+    this.getOutOfJail = false;
+    this.turn = turn;
+    this.position = 0;
+  }
+
 const updatePlayerPosition = function(player, position){
     let tempPosition = player.position;
     player.position = (position + tempPosition);
@@ -68,4 +81,8 @@ const buyProperty = function(player, cell){
         player.money -= cell.rent[0]
     }
     console.log(cell, player)
+}
+
+const updatePlayerPiece = function(player){
+    $(`.${player.piece}`).detach().prependTo(`#cell-${player.position}`);    
 }

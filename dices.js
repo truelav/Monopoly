@@ -345,7 +345,6 @@ const die2Val = function () {
   } 
 }
 
-
 const resetDices = function(){
   die1 = 0; 
   die2 = 0;

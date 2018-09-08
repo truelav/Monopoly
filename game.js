@@ -12,20 +12,6 @@ var currentCommunityChestCard;
 const players = {};
 const pieces = ['hat', 'show', 'iron'];
 
-const Player = function (piece, name, color, turn, piece) {
-  this.cell = 0;
-  this.name = name;
-  this.piece = piece;
-  this.color = color;
-  this.money = 1500;
-  this.inJail = false;
-  this.property = [];
-  this.getOutOfJail = false;
-  this.turn = turn;
-  this.position = 0;
-}
-
-
 $(document).ready(function() {
 
   $('#player-number').change(function() {
@@ -47,9 +33,11 @@ $(document).ready(function() {
   })
 
   $( ".roll-dice" ).click(function() { 
+    // rolling the dice
     rollDice();
+    hideRollDiceButton();
 
-    //update dices
+    //update dices graphically
     die1Val();
     die2Val();
 
@@ -58,49 +46,56 @@ $(document).ready(function() {
 
     //updating the player position
     updatePlayerPosition(currentPlayer, sumDices);
-
-    //check if you made a whole trip
-    if ( currentPlayer.position > 39 ) {
-        currentPlayer.position = currentCell.position - 40;
-    }
+    
+    //updating the current cell and all the properties
     currentCell = board[currentPlayer.position]
+    //updateCurrentCell(currentCell, currentPlayer);
+    console.log(currentCell);
+    
+    //check if you made a whole trip
+    checkPlayerFullCycle(currentPlayer);
 
-    $(`.${currentPlayer.piece}`).detach().prependTo(`#cell-${currentPlayer.position}`);    
+    updatePlayerPiece(currentPlayer);
     alert("" + die1 + " " + die2);
+    // $(`.${currentPlayer.piece}`).detach().prependTo(`#cell-${currentPlayer.position}`);    
 
-    if(currentCell.type === "property"){
-      appendUpdatesProperty()
+    //check the type of property
+    checkTypeOfProperty(currentCell, currentPlayer);
 
-      $(".buy-property").click(  function( ) {
-        buyProperty(currentPlayer, currentCell)
-        if (currentPlayer.position >= 11 && currentPlayer.position <= 19){
-          $(`#cell-${currentPlayer.position} > .cell-color-left`).css("background-color", `${currentPlayer.color}`)
-        } else if (currentPlayer.position >= 31 && currentPlayer.position <= 39){
-          $(`#cell-${currentPlayer.position} > .cell-color-right`).css("background-color", `${currentPlayer.color}`)
-        } else {
-          $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
-        }
-      })
+    // if(currentCell.type === "property"){
+    //   appendUpdatesProperty()
 
-    } else if (currentCell.type === "chance"){
-      //invoke the chance function 
-      chanceCard(currentPlayer);
-      appendChance();
-      console.log(currentPlayer)
-    } else if (currentCell.type === 'tax'){
-      //invoke the tax function
-      appendUpdatesRest()
-    } else if (currentCell.type === "community"){
-      console.log(currentPlayer)
-      communityCard(currentPlayer);
-      appendCommunity();
-    } else {
-      appendUpdatesRest();
-    }
+    //   $(".buy-property").click(  function( ) {
+    //     buyProperty(currentPlayer, currentCell)
+    //     if (currentPlayer.position >= 11 && currentPlayer.position <= 19){
+    //       $(`#cell-${currentPlayer.position} > .cell-color-left`).css("background-color", `${currentPlayer.color}`)
+    //     } else if (currentPlayer.position >= 31 && currentPlayer.position <= 39){
+    //       $(`#cell-${currentPlayer.position} > .cell-color-right`).css("background-color", `${currentPlayer.color}`)
+    //     } else {
+    //       $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
+    //     }
+    //   })
+
+    // } else if (currentCell.type === "chance"){
+    //   //invoke the chance function 
+    //   chanceCard(currentPlayer);
+    //   appendChance();
+    //   console.log(currentPlayer)
+    // } else if (currentCell.type === 'tax'){
+    //   //invoke the tax function
+    //   appendUpdatesRest()
+    // } else if (currentCell.type === "community"){
+    //   console.log(currentPlayer)
+    //   communityCard(currentPlayer);
+    //   appendCommunity();
+    // } else {
+    //   appendUpdatesRest();
+    // }
 
     $(".end-turn").click( function() {
       endTurn(currentPlayer, nextPlayer)
       resetDices();
+      showRollDiceButton(); 
     })
 
   });
@@ -203,7 +198,25 @@ const appendCommunity = function(cell) {
                     )
 }
 
+const hideRollDiceButton = function(){
+    $(".roll-dice-button").hide();
+}
 
+const showRollDiceButton = function(){
+    $(".roll-dice-button").show();
+}
+
+const hideBuyPropertyButton = function(){
+    $(".buy-property").hide();
+}
+
+const showBuyPropertyButton = function(){
+    $(".buy-property").show();
+}
+// const updateCurrentCell = function(cell, player){
+//     cell = board[player.position]
+//     async issue wont update currentCell before im using it
+// }
 
 
 const checkCellForRent = function(player, cell){
