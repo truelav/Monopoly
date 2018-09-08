@@ -7,7 +7,7 @@ var currentPlayer;
 var nextPlayer;
 var numberOfPlayers;
 var currentChanceCard;
-var currentCommunityChest;
+var currentCommunityChestCard;
 
 const players = {};
 const pieces = ['hat', 'show', 'iron'];
@@ -46,33 +46,18 @@ $(document).ready(function() {
     console.log(players);
   })
 
-  // const checkPlayerTurn = function(){
-   
-  // }
-
   $( ".roll-dice" ).click(function() { 
     rollDice();
+
     //update dices
     die1Val();
     die2Val();
 
     //check what player's turn is now
-    //checkPlayerTurn();
-    if (players.player1.turn){
-      var currentPlayer = players.player1;
-      var nextPlayer = players.player2;
-      console.log('the current player is: ' + currentPlayer.name)
-    } else if (players.player2.turn) {
-      var currentPlayer = players.player2;
-      var nextPlayer = players.player1;
-      console.log('the current player is: ' + currentPlayer.name)
-    }
+    checkPlayerTurn();
 
     //updating the player position
-
     updatePlayerPosition(currentPlayer, sumDices);
-    // let tempPosition = currentPlayer.position;
-    // currentPlayer.position = (sumDices + tempPosition);
 
     //check if you made a whole trip
     if ( currentPlayer.position > 39 ) {
@@ -99,24 +84,25 @@ $(document).ready(function() {
 
     } else if (currentCell.type === "chance"){
       //invoke the chance function 
-      console.log(chance)
-      chance(currentPlayer);
-      appendChanceAndCommunity();
+      chanceCard(currentPlayer);
+      appendChance();
+      console.log(currentPlayer)
     } else if (currentCell.type === 'tax'){
       //invoke the tax function
       appendUpdatesRest()
     } else if (currentCell.type === "community"){
-      appendUpdatesRest()
-      communityChest(currentPlayer)
+      console.log(currentPlayer)
+      communityCard(currentPlayer);
+      appendCommunity();
     } else {
       appendUpdatesRest();
     }
 
     $(".end-turn").click( function() {
-      currentPlayer.turn = false;
-      nextPlayer.turn = true;
+      endTurn(currentPlayer, nextPlayer)
       resetDices();
     })
+
   });
 });
 
@@ -133,7 +119,7 @@ const rollDice = function () {
   die1 = Math.floor( Math.random() * 6 ) + 1;
   die2 = Math.floor( Math.random() * 6 ) + 1;
   sumDices = die1 + die2;
-  // sumDices =  7;
+  //sumDices = 7
 }
 
 const buyProperty = function(player, cell){
@@ -254,13 +240,26 @@ const appendUpdateJail = function(){
                     )
 }
 
-const appendChanceAndCommunity = function(cell) {
+const appendChance = function(cell) {
   $(".game-updates")
                     .append( 
                       `
                       <div class="cell-information">
                         <p>${currentCell.name}</p>
                         <p>${currentChanceCard.name}</p>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
+const appendCommunity = function(cell) {
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>${currentCommunityChestCard.name}</p>
                         <button class="end-turn">End Turn</button>
                       </div> 
                       `
