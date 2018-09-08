@@ -46,3 +46,26 @@ const movePlayerToBegin = function(player){
     player.position = 0;
     $(`.${player.piece}`).detach().prependTo(`#cell-${player.position}`);
 }
+
+const payIncomeTax = function(player){
+    var tenthOfYourMoney = Math.floor(player.money / 10);
+    player.money -= tenthOfYourMoney;
+  }
+  
+  const payLuxuryTax = function(player){
+    player.money -= 75;
+  }
+
+  
+const buyProperty = function(player, cell){
+    if(cell.type === 'property' && !cell.owned && player.money > cell.price){
+        cell.owned = player.piece.slice(0,7);
+        player.money -= cell.price;
+        player.property.push( cell )
+        //appendFacilityProperty(player);
+    } else if (cell.type === 'property' && cell.owned){
+        console.log('property is owned by another player play rent')
+        player.money -= cell.rent[0]
+    }
+    console.log(cell, player)
+}

@@ -1,319 +1,223 @@
-const player = function (piece, name, color) {
-    this.cell = 0;
-    this.name = name;
-    this.piece = piece;
-    this.color = color;
-    this.money = 1500;
-    this.inJail = false;
-    this.property = [];
-    this.getOutOfJail = 0;
-    this.turn = 0;
-    this.position = 0;
+let die1;
+let die2;
+let sumDices;
+var turn = 0;
+var currentCell;
+var currentPlayer;
+var nextPlayer;
+var numberOfPlayers;
+var currentChanceCard;
+var currentCommunityChestCard;
+
+const players = {};
+const pieces = ['hat', 'show', 'iron'];
+
+const Player = function (piece, name, color, turn, piece) {
+  this.cell = 0;
+  this.name = name;
+  this.piece = piece;
+  this.color = color;
+  this.money = 1500;
+  this.inJail = false;
+  this.property = [];
+  this.getOutOfJail = false;
+  this.turn = turn;
+  this.position = 0;
 }
 
 
-const game = () => {
+$(document).ready(function() {
 
-  this.cells = [
+  $('#player-number').change(function() {
+      var numberOfPlayers = $("#player-number").val();
+      if (numberOfPlayers === '2'){
+          $( `#player-${1}-input, #player-${2}-input`).css("display", "block");
+          $(`#player-${3}-input, #player-${4}-input`).css("display", "none");
+      } else if (numberOfPlayers === '3'){
+          $(`#player-${3}-input, #player-${1}-input, #player-${2}-input`).css("display", "block");
+          $(`#player-${4}-input`).css("display", "none");
+      } else if (numberOfPlayers === '4'){
+          $(`#player-${3}-input, #player-${1}-input, #player-${2}-input, #player-${4}-input`).css("display", "block");
+      }
+  })
 
-    {
-        name: 'Go',
-        cost: null,
-        owned: null,
-        desc: 'collect $200',
-        get: 200,
-        img: 'https://preview.ibb.co/catK6x/go.jpg'
-    },
-    {
-        name: 'Mediteranean Avenue',
-        price: 60,
-        rental: [2, 10, 30, 90, 160, 250],
-        color: "brown",
-        housePrice: 50,
-        type: "property",
-        owned: false
-    },
-    {
-        name: 'Community Chest',
-        cost: null,
-        owned: false,
-        desc: 'collect the card',
-        img: "https://preview.ibb.co/catK6x/go.jpg"     
-    },
-    {
-        name: 'Baltic Avenue',
-        price: 60,
-        rental: [4, 20, 60, 180, 360, 450],
-        color: "brown",
-        housePrice: 50,
-        type: "property",
-        owned: false
-    },
-    {
-        name: 'Income Tax',
-        type: "tax",
-        amount: 200
-    },
-    {
-        name: 'Reading Railroad',
-        price: 200,
-        rental: [25, 50, 100, 200],
-        type: "station",
-        owned: false
+  $(".start-game").click(function(){
+    startGame()
+    console.log(players);
+  })
 
-    },
-    {
-        name: 'Oriental Avenue',
-        owned: false,
-        price: 100,
-        rental: [6, 30, 90, 270, 400, 550],
-        color: "lightBlue",
-        housePrice: 50,
-        type: "property"
-    },
-    {
-        name: 'Chance',
-        cost: null,
-        owned: false,
-        desc: 'chance',
-    },
-    {
-        name: 'Vermont Avenue',
-        price: 100,
-        rental: [6, 30, 90, 270, 400, 550],
-        color: "lightBlue",
-        housePrice: 50,
-        type: "property",
-        owned: false,
-        desc: 'vermont',
-    },
-    {
-        name: 'Connecticut Avenue',
-        price: 120,
-        rental: [8, 40, 100, 300, 450, 600],
-        color: "lightBlue",
-        housePrice: 50,
-        type: "property",
-        owned: false,
-        desc: 'connecticut',
-    },
-    {
-        name: 'Jail',
-        cost: null,
-        owned: false,
-        desc: 'jail',
-        img: "https://preview.ibb.co/catK6x/go.jpg"
-    },
-    {
-        name: 'St Charles Place',
-        cost: 140,
-        owned: false,
-        desc: 'vermont',
-        img: "https://preview.ibb.co/catK6x/go.jpg"
-    },
-    {
-        name: 'Electric Company',
-        cost: 150,
-        owned: false,
-        desc: 'vermont',
-        img: "https://preview.ibb.co/catK6x/go.jpg"
-    },
-    {
-        name: 'States Avenue',
-        cost: 140,
-        owned: false,
-        desc: 'states',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Virginia Avenue',
-        cost: 160,
-        owned: false,
-        desc: 'vermont',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Pennsylvania Railroad',
-        cost: 200,
-        owned: false,
-        desc: 'railroad',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'St James Avenue',
-        cost: 180,
-        owned: false,
-        desc: 'st james',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Community Chest',
-        cost: false,
-        desc: 'community chest',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Tennessee Avenue',
-        cost: 180,
-        owned: false,
-        desc: 'tennessee',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'New York Avenue',
-        cost: 200,
-        owned: false,
-        desc: 'new york',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Free Parking',
-        desc: 'parking',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Kentucky Avenue',
-        cost: 220,
-        owned: false,
-        desc: 'kentucky',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Chance',
-        desc: 'chance',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Indiana Avenue',
-        cost: 220,
-        owned: false,
-        desc: 'indiana',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Ilinois Avenue',
-        cost: 200,
-        owned: false,
-        desc: 'vermont',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'B & O Railroad',
-        cost: 200,
-        owned: false,
-        desc: 'railroad',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Atlantic Avenue',
-        cost: 260,
-        owned: false,
-        desc: 'atlantic',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Ventnor Avenue',
-        cost: 260,
-        owned: false,
-        desc: 'ventnor',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Waterworks',
-        cost: 120,
-        owned: false,
-        desc: 'waterworks',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Marvin Gardens',
-        cost: 280,
-        owned: false,
-        desc: 'marvin gardens',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Jail',
-        desc: 'jail',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Pacific Avenue',
-        cost: 300,
-        owned: false,
-        desc: 'pacific',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'North Carolina Avenue',
-        cost: 300,
-        owned: false,
-        desc: 'north carolina',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Community Chest',
-        desc: 'community chest',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Penssylvania Avenue',
-        cost: 320,
-        owned: false,
-        desc: 'pennsylvania',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Short Line',
-        cost: 200,
-        owned: false,
-        desc: 'short line',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Chance',
-        desc: 'chance',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Park Place',
-        cost: 350,
-        owned: false,
-        desc: 'park place',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'Luxury Tax',
-        pay: 75,
-        desc: 'pay the $70 tax',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
-    {
-        name: 'BoardWalk',
-        cost: 400,
-        owned: false,
-        desc: 'boardwalk',
-        img: "https://preview.ibb.co/catK6x/go.jpg",
-    },
+  $( ".roll-dice" ).click(function() { 
+    rollDice();
 
-]
+    //update dices
+    die1Val();
+    die2Val();
 
+    //check what player's turn is now
+    checkPlayerTurn();
 
-    let die1 = 0;
-    let die2 = 0;
-    let areDicesRolled = false;
+    //updating the player position
+    updatePlayerPosition(currentPlayer, sumDices);
 
-    this.rollDice = () => {
-        die1 = Math.floor( Math.random() * 6 ) + 1;
-        die2 = Math.floor( Math.random() * 6 ) + 1;
+    //check if you made a whole trip
+    if ( currentPlayer.position > 39 ) {
+        currentPlayer.position = currentCell.position - 40;
     }
+    currentCell = board[currentPlayer.position]
 
-    this.buyProperty = (cell, player) => {
-        if ( !cell.owned && player.money >= cell.cost ) {
-            cell.owned = true;
-            player.money - cell.cost;
-            player.property.push( cell.name )
+    $(`.${currentPlayer.piece}`).detach().prependTo(`#cell-${currentPlayer.position}`);    
+    alert("" + die1 + " " + die2);
+
+    if(currentCell.type === "property"){
+      appendUpdatesProperty()
+
+      $(".buy-property").click(  function( ) {
+        buyProperty(currentPlayer, currentCell)
+        if (currentPlayer.position >= 11 && currentPlayer.position <= 19){
+          $(`#cell-${currentPlayer.position} > .cell-color-left`).css("background-color", `${currentPlayer.color}`)
+        } else if (currentPlayer.position >= 31 && currentPlayer.position <= 39){
+          $(`#cell-${currentPlayer.position} > .cell-color-right`).css("background-color", `${currentPlayer.color}`)
+        } else {
+          $(`#cell-${currentPlayer.position} > .cell-color`).css("background-color", `${currentPlayer.color}`)
         }
+      })
+
+    } else if (currentCell.type === "chance"){
+      //invoke the chance function 
+      chanceCard(currentPlayer);
+      appendChance();
+      console.log(currentPlayer)
+    } else if (currentCell.type === 'tax'){
+      //invoke the tax function
+      appendUpdatesRest()
+    } else if (currentCell.type === "community"){
+      console.log(currentPlayer)
+      communityCard(currentPlayer);
+      appendCommunity();
+    } else {
+      appendUpdatesRest();
     }
 
+    $(".end-turn").click( function() {
+      endTurn(currentPlayer, nextPlayer)
+      resetDices();
+    })
+
+  });
+});
+
+
+const startGame = function(){
+  numberOfPlayers = $("#player-number").val();
+  var player11 = new Player ('hat', $(`#player-1-name`).val(), $(`#player-1-color`).val(), true, 'player1-piece')
+  var player22 = new Player ('car', $(`#player-2-name`).val(), $(`#player-3-color`).val(), false, 'player2-piece')
+  players.player1 = player11
+  players.player2 = player22
+  $("#setup").css("display", "none");
+  $(".page-view").css("display", "block");
 }
+
+const buyFacilityProperty = function(player, cell){
+
+}
+
+
+const appendUpdatesProperty = function() {
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>Price: ${currentCell.price}</p>
+                        <p>Rent: ${currentCell.rental}</p>
+                        <div class="action-buttons">
+                          <button class="buy-property">Buy Property</button>
+                          <button class="bid-prperty">Bid Property</button>
+                        </div>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
+const appendGamesUpdates = function() {
+  //neet to create and append some game updates to the game 
+  //if money add or loose plus buy property or anything that has to be
+  //appended for the players to see , so basicaly everything that changes
+  //has to be appended so we can seee the changes
+  
+}
+
+const appendUpdatesRest = function() {
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
+const appendFacilityProperty = function(player) {
+  $(`#cell-${player.position}`).css("background-color", `${player.color}`)
+}
+
+const appendUpdateJail = function(){
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>You have landed on Jail</p>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
+const appendChance = function(cell) {
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>${currentChanceCard.name}</p>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
+const appendCommunity = function(cell) {
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>${currentCommunityChestCard.name}</p>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
+
+
+
+const checkCellForRent = function(player, cell){
+  if(cell.owned){
+    //need to check to which player does it belong to and give rent to him, probably owne property needs to 
+    //changed when property has been bought
+    player.money -= cell.rent[0]
+    players[cell.owned].money += cell.rent[0]
+    console.log('check if both players money have been updated')
+    //plus we need check for how many properties the player owes so we can get the correct rent;
+  } else {
+    //continue
+    //return false
+    return false
+  }
+}
+
