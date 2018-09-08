@@ -1,5 +1,3 @@
-
-
 let die1;
 let die2;
 let sumDices;
