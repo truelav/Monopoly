@@ -5,6 +5,7 @@ const board  =  [{
     name: "MEDITERRANEAN AVENUE",
     price: 60,
     rental: [2, 10, 30, 90, 160, 250],
+    currentRental: 0,
     color: "brown",
     housePrice: 50,
     type: "property",
@@ -16,6 +17,7 @@ const board  =  [{
     name: "BALTIC AVENUE",
     price: 60,
     rental: [4, 20, 60, 180, 360, 450],
+    currentRental: 0,
     color: "brown",
     housePrice: 50,
     type: "property",
@@ -28,12 +30,14 @@ const board  =  [{
     name: "READING RAILROAD",
     price: 200,
     rental: [25, 50, 100, 200],
+    currentRental: 0,
     type: "property",
     owned: false
   },{
     name: "ORIENTAL AVENUE",
     price: 100,
     rental: [6, 30, 90, 270, 400, 550],
+    currentRental: 0,
     color: "lightBlue",
     housePrice: 50,
     type: "property",
@@ -45,6 +49,7 @@ const board  =  [{
     name: "VERMONT AVENUE",
     price: 100,
     rental: [6, 30, 90, 270, 400, 550],
+    currentRental: 0,
     color: "lightBlue",
     housePrice: 50,
     type: "property",
@@ -53,6 +58,7 @@ const board  =  [{
     name: "CONNECTICUT AVENUE",
     price: 120,
     rental: [8, 40, 100, 300, 450, 600],
+    currentRental: 0,
     color: "lightBlue",
     housePrice: 50,
     type: "property",
@@ -64,6 +70,7 @@ const board  =  [{
     name: "ST.CHARLES AVENUE",
     price: 140,
     rental: [10, 50, 150, 450, 625, 750],
+    currentRental: 0,
     housePrice: 100,
     type: "property",
     owned: false
@@ -77,6 +84,7 @@ const board  =  [{
     name: "STATES AVENUE",
     price: 140,
     rental: [10, 50, 150, 450, 625, 750],
+    currentRental: 0,
     housePrice: 100,
     type: "property",
     owned: false
@@ -84,6 +92,7 @@ const board  =  [{
     name: "VIRGINIA AVENUE",
     price: 160,
     rental: [12, 60, 180, 500, 700, 900],
+    currentRental: 0,
     housePrice: 100,
     type: "property",
     owned: false
@@ -91,12 +100,14 @@ const board  =  [{
     name: "PENNSYLVANIA RAILROAD",
     price: 200,
     rental: [25, 50, 100, 200],
+    currentRental: 0,
     type: "railroad",
     owned: false
   },{
     name: "ST.JAMES PLACE",
     price: 180,
     rental: [14, 70, 200, 550, 750, 950],
+    currentRental: 0,
     housePrice: 100,
     type: "property",
     owned: false
@@ -107,6 +118,7 @@ const board  =  [{
     name: "TENESSEE AVENUE",
     price: 180,
     rental: [14, 70, 200, 550, 750, 950],
+    currentRental: 0,
     housePrice: 100,
     type: "property",
     owned: false
@@ -114,6 +126,7 @@ const board  =  [{
     name: "NEW YORK AVENUE",
     price: 200,
     rental: [16, 80, 220, 600, 800, 1000],
+    currentRental: 0,
     housePrice: 100,
     type: "property",
     owned: false
@@ -124,6 +137,7 @@ const board  =  [{
     name: "KENTUCKY AVENUE",
     price: 220,
     rental: [18, 90, 250, 700, 875, 1050],
+    currentRental: 0,
     housePrice: 150,
     type: "property",
     owned: false
@@ -134,6 +148,7 @@ const board  =  [{
     name: "INDIANA AVENUE",
     price: 220,
     rental: [18, 90, 250, 700, 875, 1050],
+    currentRental: 0,
     housePrice: 150,
     type: "property",
     owned: false
@@ -141,6 +156,7 @@ const board  =  [{
     name: "ILLINOIS AVENUE",
     price: 240,
     rental: [20, 100, 300, 750, 925, 1100],
+    currentRental: 0,
     housePrice: 150,
     type: "property",
     owned: false
@@ -148,12 +164,14 @@ const board  =  [{
     name: "B&O RAILROAD",
     price: 200,
     rental: [25, 50, 100, 200],
+    currentRental: 0,
     type: "station",
     owned: false
   },{
     name: "ATLANTIC AVENUE",
     price: 260,
     rental: [22, 110, 330, 800, 975, 1150],
+    currentRental: 0,
     housePrice: 150,
     type: "property",
     owned: false
@@ -161,6 +179,7 @@ const board  =  [{
     name: "VENTNOR AVENUE",
     price: 260,
     rental: [22, 110, 330, 800, 975, 1150],
+    currentRental: 0,
     color: "yellow",
     housePrice: 150,
     type: "property",
@@ -169,12 +188,14 @@ const board  =  [{
     name: "WATER WORKS",
     price: 150,
     rental: [ 100, 200],
+    currentRental: 0,
     type: "utility",
     owned: false
   },{
     name: "MARVIN GARDENS",
     price: 280,
     rental: [22, 120, 360, 850, 1025, 1200],
+    currentRental: 0,
     color: "yellow",
     housePrice: 140,
     type: "property",
@@ -186,6 +207,7 @@ const board  =  [{
     name: "PACIFIC AVENUE",
     price: 300,
     rental: [26, 130, 390, 900, 1100, 1275],
+    currentRental: 0,
     housePrice: 200,
     type: "property",
     owned: false
@@ -193,6 +215,7 @@ const board  =  [{
     name: "NORTH CAROLINA AVENUE",
     price: 300,
     rental: [26, 130, 390, 900, 1100, 1275],
+    currentRental: 0,
     housePrice: 200,
     type: "property",
     owned: false
@@ -203,6 +226,7 @@ const board  =  [{
     name: "PENNSYLVANIA AVENUE",
     price: 320,
     rental: [28, 150, 450, 1000, 1200, 1400],
+    currentRental: 0,
     housePrice: 200,
     type: "property",
     owned: false
@@ -210,6 +234,7 @@ const board  =  [{
     name: "SHORT LINE",
     price: 200,
     rental: [25, 50, 100, 200],
+    currentRental: 0,
     type: "station",
     owned: false
   },{
@@ -219,6 +244,7 @@ const board  =  [{
     name: "PARK PLACE",
     price: 350,
     rental: [35, 175, 500, 1100, 1300, 1500],
+    currentRental: 0,
     housePrice: 200,
     type: "property",
     owned: false
@@ -230,6 +256,7 @@ const board  =  [{
     name: "BOARDWALK",
     price: 400,
     rental: [50, 200, 600, 1400, 1700, 2000],
+    currentRental: 0,
     housePrice: 200,
     type: "property",
     owned: false

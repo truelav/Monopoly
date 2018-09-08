@@ -54,12 +54,10 @@ const checkTypeOfProperty = function(cell, player){
     }
 }
 
-const checkToPayRent = function(){
+// const checkIfCellOwnedByPlayer = function(player, cell){
+//     if (cell.owned){
 
-}
+//     } else if (!cell.owned){
 
-const checkIfCellOwnedByPlayer = function(player, cell){
-    if (cell.owned){
-        
-    }
-}
+//     }
+// }

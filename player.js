@@ -5,7 +5,17 @@ const Player = function (piece, name, color, turn, piece) {
     this.color = color;
     this.money = 1500;
     this.inJail = false;
-    this.property = [];
+    this.property = {
+        property: {
+
+        },
+        railroad: {
+
+        },
+        utility: {
+
+        }
+    };
     this.getOutOfJail = false;
     this.turn = turn;
     this.position = 0;
@@ -72,20 +82,41 @@ const payIncomeTax = function(player){
   
 const buyProperty = function(player, cell){
     if (cell.type === 'property' && !cell.owned && player.money > cell.price){
-        console.log(player.name)
-        board[player.position].owned = player.name
-        player.money -= cell.price;
+        console.log(player)
+        board[player.position].owned = player.piece.slice(0, 7);
+        cell.owned = player.piece.slice(0, 7)
+        updatePlayerMoney(player, -cell.price);
+        updaptePlayerProperty(player, cell);
+        updateCurrentRental(player, cell);
         hideBuyPropertyButton();
-        //player.property.push( cell )
-        //appendFacilityProperty(player);
-    } else if (cell.type === 'property' && cell.owned){
-        console.log('property is owned by another player play rent')
-        hideBuyPropertyButton();
-        //player.money -= cell.rent[0]
-    }
-    console.log(cell, player)
+    } 
+    //     else if (cell.type === 'property' && cell.owned){
+    //         console.log('property is owned by another player play rent')
+        
+    // }
+
+    // need to create more logic on whether the player 
 }
 
 const updatePlayerPiece = function(player){
     $(`.${player.piece}`).detach().prependTo(`#cell-${player.position}`);    
+}
+
+const updaptePlayerProperty = function(player, cell){
+    if (cell.type === "property"){
+        player.property.property.name = cell.name;
+    } else if (cell.type === "utility"){
+        player.property.utility.name = cell.name;
+    } else if (cell.type === "railroad"){
+        player.property.railroad.name = cell.name;
+    }
+}
+
+const updatePlayerPayRent = function(player, cell){
+    //update the current player that has to pay the rent
+    updatePlayerMoney(player, -cell.currentRental);
+
+    //pay to the player that holds the property
+    let payToThe = players[cell.owned]
+    updatePlayerMoney(payToThe, cell.currentRental)
 }

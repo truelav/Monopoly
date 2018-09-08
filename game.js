@@ -29,7 +29,6 @@ $(document).ready(function() {
 
   $(".start-game").click(function(){
     startGame()
-    console.log(players);
   })
 
   $( ".roll-dice" ).click(function() { 
@@ -66,6 +65,7 @@ $(document).ready(function() {
       resetDices();
       showRollDiceButton(); 
       showBuyPropertyButton();
+      console.log(players);
     })
 
   });
@@ -101,6 +101,7 @@ const appendUpdatesProperty = function(cell) {
                       </div> 
                       `
                     )
+        updatePlayerPayRent(currentPlayer, currentCell);
     } else {
         $(".game-updates")
                     .append( 
@@ -201,6 +202,12 @@ const hideBuyPropertyButton = function(){
 
 const showBuyPropertyButton = function(){
     $(".buy-property").show();
+}
+
+const updateCurrentRental = function(player, cell){
+    //need somehow to check how many properties the player has and calculate the currentRental;
+    board[player.position].currentRental = board[player.position].rental[0];
+    console.log(board[player.position])
 }
 
 // const updateCurrentCell = function(cell, player){
