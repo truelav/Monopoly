@@ -28,57 +28,74 @@ $(document).ready(function() {
   })
 
   $(".start-game").click(function(){
-    startGame()
+    startGame();
   })
 
   $( ".roll-dice" ).click(function() { 
-    // rolling the dice
-    rollDice();
-    hideRollDiceButton();
-
-    //update dices graphically
-    die1Val();
-    die2Val();
-
-    //check what player's turn is now
+    
+    // //check what player's turn is now
     checkPlayerTurn();
-
-    //updating the player position
-    updatePlayerPosition(currentPlayer, sumDices);
     
-    //updating the current cell and all the properties
-    currentCell = board[currentPlayer.position]
-    //updateCurrentCell(currentCell, currentPlayer);
+    //if the player is in jail then skip the movement and roll the dice
+    if (checkIfPlayerInJail(currentPlayer)){
+      //update the player inJail property;
+      appendAlredyInJail(currentPlayer);
 
-    //check if you made a whole trip
-    checkPlayerFullCycle(currentPlayer);
+      //just end the turn 
+      $(".end-turn").click( function() {
+        endTurn(currentPlayer, nextPlayer)
+        resetDices();
+        showRollDiceButton(); 
+        showBuyPropertyButton();
+        console.log(players);
+      })
 
-    updatePlayerPiece(currentPlayer);
-    alert("" + die1 + " " + die2);
-    // $(`.${currentPlayer.piece}`).detach().prependTo(`#cell-${currentPlayer.position}`);    
+    } else {
+      // rolling the dice
+      rollDice(currentPlayer);
+      hideRollDiceButton();
 
-    //check the type of property
-    checkTypeOfProperty(currentCell, currentPlayer);
+      //update dices graphically
+      die1Val();
+      die2Val();
 
-    //those are functions that handles paying taxes
-    $(".pay-10").click( function(){
-      handlePay10Button(currentPlayer);
-      $(".action-buttons").hide();
-    }) 
-    
-    $(".pay-200").click( function(){
-      handlePay200Button(currentPlayer);
-      $(".action-buttons").hide();
-    }) 
 
-    $(".end-turn").click( function() {
-      endTurn(currentPlayer, nextPlayer)
-      resetDices();
-      showRollDiceButton(); 
-      showBuyPropertyButton();
-      console.log(players);
-    })
+      //updating the player position
+      updatePlayerPosition(currentPlayer, sumDices);
+      
+      //updating the current cell and all the properties
+      currentCell = board[currentPlayer.position]
+      //updateCurrentCell(currentCell, currentPlayer);
 
+      //check if you made a whole trip
+      checkPlayerFullCycle(currentPlayer);
+
+      updatePlayerPiece(currentPlayer);
+      alert("" + die1 + " " + die2);
+      // $(`.${currentPlayer.piece}`).detach().prependTo(`#cell-${currentPlayer.position}`);    
+
+      //check the type of property
+      checkTypeOfProperty(currentCell, currentPlayer);
+
+      //those are functions that handles paying taxes
+      $(".pay-10").click( function(){
+        handlePay10Button(currentPlayer);
+        $(".action-buttons").hide();
+      }) 
+      
+      $(".pay-200").click( function(){
+        handlePay200Button(currentPlayer);
+        $(".action-buttons").hide();
+      }) 
+
+      $(".end-turn").click( function() {
+        endTurn(currentPlayer, nextPlayer)
+        resetDices();
+        showRollDiceButton(); 
+        showBuyPropertyButton();
+        console.log(players);
+      })
+    }  
   });
 });
 
@@ -170,6 +187,19 @@ const appendLandOnJail = function(){
                         </div> 
                       `
                     )
+}
+
+const appendAlredyInJail = function(player){
+  $(".game-updates")
+                    .append( 
+                      `
+                        <div class="cell-information">
+                            <p>Gonna have to skip this move</p>
+                            <button class="end-turn">End Turn</button>
+                        </div> 
+                      `
+                    )
+  updatePlayerInJail(player);                  
 }
 
 const appendLandOnParking = function(){

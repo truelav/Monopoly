@@ -4,9 +4,32 @@ const checkPlayerStatus = function(player){
     //check player if has money to buy property or to pay rent
 }
 
+const checkPlayerTurn = function(){
+    if (players.player1.turn){
+        currentPlayer = players.player1;
+        nextPlayer = players.player2;
+        console.log('the current player is: ' + currentPlayer.name)
+    } else if (players.player2.turn) {
+        currentPlayer = players.player2;
+        nextPlayer = players.player1;
+        console.log('the current player is: ' + currentPlayer.name)
+    }
+}
+
+const checkIfPlayerInJail = function(player){
+    if (player.inJail){
+        return true
+    } else if (!player.inJail){
+        return false
+    }
+}
+
 const checkPlayerFullCycle = function(player){
-    if ( player.position > 39 ) {
+    if ( player.position >= 40 ) {
         player.position = player.position - 40;
+        updatePlayerMoney(player, 200)
+    } else {
+        return
     }
 }
 
@@ -52,6 +75,7 @@ const checkTypeOfProperty = function(cell, player){
             //also if player bought the property we need to hide the buy button or trade if the property dont belong to him yet
         })
     } else if (cell.type === 'jail'){
+        updatePlayerInJail(player);
         appendLandOnJail(cell);
         //handle jail function
     } else if (cell.type === 'parking'){

@@ -1,8 +1,10 @@
 const board  =  [{
+    square: 0,
     name: "Go",
     type: "go"
   },{
     name: "MEDITERRANEAN AVENUE",
+    square: 1,
     price: 60,
     rental: [2, 10, 30, 90, 160, 250],
     currentRental: 0,
@@ -12,9 +14,11 @@ const board  =  [{
     owned: false
   },{
     name: "COMMUNITY CHEST",
+    square: 2,
     type: "community"
   },{
     name: "BALTIC AVENUE",
+    square: 3,
     price: 60,
     rental: [4, 20, 60, 180, 360, 450],
     currentRental: 0,
@@ -24,10 +28,12 @@ const board  =  [{
     owned: false
   },{
     name: "INCOME TAX",
+    square: 4,
     type: "tax",
     amount: 200
   },{
     name: "READING RAILROAD",
+    square: 5,
     price: 200,
     rental: [25, 50, 100, 200],
     currentRental: 0,
@@ -35,6 +41,7 @@ const board  =  [{
     owned: false
   },{
     name: "ORIENTAL AVENUE",
+    square: 6,
     price: 100,
     rental: [6, 30, 90, 270, 400, 550],
     currentRental: 0,
@@ -44,9 +51,11 @@ const board  =  [{
     owned: false
   },{
     name: "Chance",
+    square: 7,
     type: "chance"
   },{
     name: "VERMONT AVENUE",
+    square: 8,
     price: 100,
     rental: [6, 30, 90, 270, 400, 550],
     currentRental: 0,
@@ -56,6 +65,7 @@ const board  =  [{
     owned: false
   },{
     name: "CONNECTICUT AVENUE",
+    square: 9,
     price: 120,
     rental: [8, 40, 100, 300, 450, 600],
     currentRental: 0,
@@ -65,9 +75,11 @@ const board  =  [{
     owned: false
   },{
     name: "Jail",
+    square: 10,
     type: "jail"
   },{
     name: "ST.CHARLES AVENUE",
+    square: 11,
     price: 140,
     rental: [10, 50, 150, 450, 625, 750],
     currentRental: 0,
@@ -76,12 +88,14 @@ const board  =  [{
     owned: false
   },{
     name: "ELECTRIC COMPANY",
+    square: 12,
     price: 150,
     rental: [100, 200],
     type: "utility",
     owned: false
   },{
     name: "STATES AVENUE",
+    square: 13,
     price: 140,
     rental: [10, 50, 150, 450, 625, 750],
     currentRental: 0,
@@ -90,6 +104,7 @@ const board  =  [{
     owned: false
   },{
     name: "VIRGINIA AVENUE",
+    square: 14,
     price: 160,
     rental: [12, 60, 180, 500, 700, 900],
     currentRental: 0,
@@ -98,6 +113,7 @@ const board  =  [{
     owned: false
   },{
     name: "PENNSYLVANIA RAILROAD",
+    square: 15,
     price: 200,
     rental: [25, 50, 100, 200],
     currentRental: 0,
@@ -105,6 +121,7 @@ const board  =  [{
     owned: false
   },{
     name: "ST.JAMES PLACE",
+    square: 16,
     price: 180,
     rental: [14, 70, 200, 550, 750, 950],
     currentRental: 0,
@@ -113,9 +130,11 @@ const board  =  [{
     owned: false
   },{
     name: "COMMUNITY CHEST",
+    square: 17,
     type: 'community'
   },{
     name: "TENESSEE AVENUE",
+    square: 18,
     price: 180,
     rental: [14, 70, 200, 550, 750, 950],
     currentRental: 0,
@@ -124,6 +143,7 @@ const board  =  [{
     owned: false
   },{
     name: "NEW YORK AVENUE",
+    square: 19,
     price: 200,
     rental: [16, 80, 220, 600, 800, 1000],
     currentRental: 0,
@@ -132,9 +152,11 @@ const board  =  [{
     owned: false
   },{
     name: "Free Parking",
+    square: 20,
     type: 'parking',
   },{
     name: "KENTUCKY AVENUE",
+    square: 21,
     price: 220,
     rental: [18, 90, 250, 700, 875, 1050],
     currentRental: 0,

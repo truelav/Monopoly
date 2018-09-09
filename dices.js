@@ -353,9 +353,14 @@ const resetDices = function(){
   die2Val();
 }
 
-const rollDice = function () {
-  die1 = Math.floor( Math.random() * 6 ) + 1;
-  die2 = Math.floor( Math.random() * 6 ) + 1;
-  sumDices = die1 + die2;
-  sumDices = 4;
+const rollDice = function (player) {
+  if (player.inJail){
+    //sumDices = 0;
+    updatePlayerInJail(player);
+  } else {
+    die1 = Math.floor( Math.random() * 6 ) + 1;
+    die2 = Math.floor( Math.random() * 6 ) + 1;
+    sumDices = die1 + die2;
+    sumDices = 10;
+  }
 }

@@ -47,17 +47,6 @@ const goToJail = function(player){
     }
 }
 
-const checkPlayerTurn = function(){
-    if (players.player1.turn){
-        currentPlayer = players.player1;
-        nextPlayer = players.player2;
-        console.log('the current player is: ' + currentPlayer.name)
-    } else if (players.player2.turn) {
-        currentPlayer = players.player2;
-        nextPlayer = players.player1;
-        console.log('the current player is: ' + currentPlayer.name)
-    }
-}
 
 const endTurn = function(curPlayer, nexPlayer){
     curPlayer.turn = false;
@@ -123,4 +112,12 @@ const handlePay10Button = function(player){
 
 const handlePayLuxuryTax = function(player){
     updatePlayerMoney(player, -75);
+}
+
+const updatePlayerInJail = function(player){
+    if (player.inJail === false){
+        player.inJail = true;
+    } else if (player.inJail === true){
+        player.inJail = false;
+    }
 }
