@@ -24,13 +24,14 @@ const checkIfPlayerInJail = function(player){
     }
 }
 
-const checkPlayerFullCycle = function(player){
-    if ( player.position >= 40 ) {
+const checkPlayerFullCycle = function(player, cell){
+    if ( player.position > 39) {
+        
         player.position = player.position - 40;
         updatePlayerMoney(player, 200)
-    } else {
-        return
-    }
+    } 
+    cell = board[player.position]
+    console.log(cell)
 }
 
 const checkTypeOfProperty = function(cell, player){  
@@ -85,14 +86,7 @@ const checkTypeOfProperty = function(cell, player){
         appendLandOnLuxuryTax(cell);
         //handle luxury tax
     } else if (cell.type === "go"){
+        appendLandOnGo();
         //handle first square
     }
 }
-
-// const checkIfCellOwnedByPlayer = function(player, cell){
-//     if (cell.owned){
-
-//     } else if (!cell.owned){
-
-//     }
-// }

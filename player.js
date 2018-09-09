@@ -22,8 +22,10 @@ const Player = function (piece, name, color, turn, piece) {
   }
 
 const updatePlayerPosition = function(player, position){
-    let tempPosition = player.position;
-    player.position = (position + tempPosition);
+    if (player.position + position > 39){
+        player.position += position - 40;
+        updatePlayerMoney(player, 200)
+    }
     $(`.${player.piece}`).detach().prependTo(`#cell-${player.position}`);
 };
 
@@ -78,9 +80,10 @@ const buyProperty = function(player, cell){
     // need to create more logic on whether the player 
 }
 
-const updatePlayerPiece = function(player){
-    $(`.${player.piece}`).detach().prependTo(`#cell-${player.position}`);    
-}
+// const updatePlayerPiece = function(player){
+//     //console.log($`#cell-${player.position}`);
+//     $(`.${player.piece}`).detach().prependTo(`#cell-${player.position}`);    
+// }
 
 const updaptePlayerProperty = function(player, cell){
     if (cell.type === "property"){

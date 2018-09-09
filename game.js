@@ -41,14 +41,6 @@ $(document).ready(function() {
       //update the player inJail property;
       appendAlredyInJail(currentPlayer);
 
-      //just end the turn 
-      $(".end-turn").click( function() {
-        endTurn(currentPlayer, nextPlayer)
-        resetDices();
-        showRollDiceButton(); 
-        showBuyPropertyButton();
-      })
-
     //if you are not in jail  just run the regular game  
     } else {
       // rolling the dice
@@ -59,21 +51,20 @@ $(document).ready(function() {
       die1Val();
       die2Val();
 
-
       //updating the player position
       updatePlayerPosition(currentPlayer, sumDices);
+      console.log(currentPlayer.position);
       
-      //updating the current cell and all the properties
+      // //updating the current cell and all the properties
       currentCell = board[currentPlayer.position]
-      //updateCurrentCell(currentCell, currentPlayer);
 
       //check if you made a whole trip
-      checkPlayerFullCycle(currentPlayer);
+      // checkPlayerFullCycle(currentPlayer, currentCell);
 
-      updatePlayerPiece(currentPlayer);
+      //updatePlayerPiece(currentPlayer);
       alert("" + die1 + " " + die2);
       // $(`.${currentPlayer.piece}`).detach().prependTo(`#cell-${currentPlayer.position}`);    
-
+  
       //check the type of property
       checkTypeOfProperty(currentCell, currentPlayer);
 
@@ -88,19 +79,19 @@ $(document).ready(function() {
         $(".action-buttons").hide();
       }) 
 
-      $(".end-turn").click( function() {
-        endTurn(currentPlayer, nextPlayer)
-        resetDices();
-        showRollDiceButton(); 
-        showBuyPropertyButton();
-        console.log(players);
-      })
     }  
+
+    //the end turn functionality will persist doesnt matter if player in jail or not
+    $(".end-turn").click( function() {
+      endTurn(currentPlayer, nextPlayer)
+      resetDices();
+      showRollDiceButton(); 
+      showBuyPropertyButton();
+      console.log(players);
+    })
+
   });
 });
-
-
-//nedd to add when landing on jail or parking, tax and utility square~
 
 
 const startGame = function(){

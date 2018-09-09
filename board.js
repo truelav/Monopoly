@@ -1,4 +1,5 @@
-const board  =  [{
+const board  =  [
+  {
     square: 0,
     name: "Go",
     type: "go"

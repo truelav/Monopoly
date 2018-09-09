@@ -141,6 +141,19 @@ const appendGamesUpdates = function() {
                         `
                       )
   }
+
+  const appendLandOnGo = function(cell){
+    $(".game-updates")
+                      .append( 
+                        `
+                        <div class="cell-information">
+                          <p>${currentCell.name}</p>
+                          <p>Collect your $200</p>
+                          <button class="end-turn">End Turn</button>
+                        </div> 
+                        `
+                      )
+  }
   
   const hideRollDiceButton = function(){
       $(".roll-dice-button").hide();

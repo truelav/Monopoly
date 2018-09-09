@@ -361,6 +361,6 @@ const rollDice = function (player) {
     die1 = Math.floor( Math.random() * 6 ) + 1;
     die2 = Math.floor( Math.random() * 6 ) + 1;
     sumDices = die1 + die2;
-    sumDices = 10;
+    sumDices = 41;
   }
 }
