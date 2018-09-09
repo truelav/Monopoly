@@ -250,7 +250,7 @@ const board  =  [{
     owned: false
   },{
     name: "Super Tax",
-    type: "tax",
+    type: "luxury-tax",
     amount: 100
   },{
     name: "BOARDWALK",

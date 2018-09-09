@@ -357,5 +357,5 @@ const rollDice = function () {
   die1 = Math.floor( Math.random() * 6 ) + 1;
   die2 = Math.floor( Math.random() * 6 ) + 1;
   sumDices = die1 + die2;
-  //sumDices = 8;
+  sumDices = 4;
 }

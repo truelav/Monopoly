@@ -70,15 +70,6 @@ const movePlayerToBegin = function(player){
     $(`.${player.piece}`).detach().prependTo(`#cell-${player.position}`);
 }
 
-const payIncomeTax = function(player){
-    var tenthOfYourMoney = Math.floor(player.money / 10);
-    player.money -= tenthOfYourMoney;
-  }
-  
-  const payLuxuryTax = function(player){
-    player.money -= 75;
-  }
-
   
 const buyProperty = function(player, cell){
     if (cell.type === 'property' && !cell.owned && player.money > cell.price){
@@ -119,4 +110,17 @@ const updatePlayerPayRent = function(player, cell){
     //pay to the player that holds the property
     let payToThe = players[cell.owned]
     updatePlayerMoney(payToThe, cell.currentRental)
+}
+
+const handlePay200Button = function(player){
+    updatePlayerMoney(player, -200);
+}
+
+const handlePay10Button = function(player){
+    let tenthOfYourMoney = Math.floor(player.money / 10);
+    updatePlayerMoney(player, -tenthOfYourMoney);
+}
+
+const handlePayLuxuryTax = function(player){
+    updatePlayerMoney(player, -75);
 }

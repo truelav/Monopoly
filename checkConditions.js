@@ -32,7 +32,7 @@ const checkTypeOfProperty = function(cell, player){
         appendChance();
     } else if (cell.type === 'tax'){
         //invoke the tax function
-        appendUpdatesRest()
+        appendTax(cell);
     } else if (cell.type === "community"){
         communityCard(player);
         appendCommunity();
@@ -51,6 +51,17 @@ const checkTypeOfProperty = function(cell, player){
             buyProperty(player, cell)
             //also if player bought the property we need to hide the buy button or trade if the property dont belong to him yet
         })
+    } else if (cell.type === 'jail'){
+        appendLandOnJail(cell);
+        //handle jail function
+    } else if (cell.type === 'parking'){
+        appendLandOnParking(cell);
+        //handle parking cell
+    } else if (cell.type === 'luxury-tax'){
+        appendLandOnLuxuryTax(cell);
+        //handle luxury tax
+    } else if (cell.type === "go"){
+        //handle first square
     }
 }
 

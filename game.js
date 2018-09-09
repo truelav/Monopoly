@@ -60,6 +60,17 @@ $(document).ready(function() {
     //check the type of property
     checkTypeOfProperty(currentCell, currentPlayer);
 
+    //those are functions that handles paying taxes
+    $(".pay-10").click( function(){
+      handlePay10Button(currentPlayer);
+      $(".action-buttons").hide();
+    }) 
+    
+    $(".pay-200").click( function(){
+      handlePay200Button(currentPlayer);
+      $(".action-buttons").hide();
+    }) 
+
     $(".end-turn").click( function() {
       endTurn(currentPlayer, nextPlayer)
       resetDices();
@@ -70,6 +81,7 @@ $(document).ready(function() {
 
   });
 });
+
 
 //nedd to add when landing on jail or parking, tax and utility square~
 
@@ -82,10 +94,6 @@ const startGame = function(){
   players.player2 = player22
   $("#setup").css("display", "none");
   $(".page-view").css("display", "block");
-}
-
-const buyFacilityProperty = function(player, cell){
-
 }
 
 
@@ -134,6 +142,20 @@ const appendGamesUpdates = function() {
 
 const appendFacilityProperty = function(player) {
   $(`#cell-${player.position}`).css("background-color", `${player.color}`)
+}
+
+appendLandOnLuxuryTax = function(){
+  $(".game-updates")
+                    .append( 
+                      `
+                        <div class="cell-information">
+                            <p>${currentCell.name}</p>
+                            <p>You have landed on Luxury Tax</p>
+                            <p>Gonna have to pay $75</p>
+                            <button class="end-turn">End Turn</button>
+                        </div> 
+                      `
+                    )
 }
 
 const appendLandOnJail = function(){
@@ -190,6 +212,23 @@ const appendCommunity = function(cell) {
                     )
 }
 
+const appendTax = function(cell){
+  $(".game-updates")
+                    .append( 
+                      `
+                      <div class="cell-information">
+                        <p>${currentCell.name}</p>
+                        <p>You've got to choose pay $200 or 10% of your cash</p>
+                        <div class="action-buttons">
+                          <button class="pay-200">$200</button>
+                          <button class="pay-10">10%</button>
+                        </div>
+                        <button class="end-turn">End Turn</button>
+                      </div> 
+                      `
+                    )
+}
+
 const hideRollDiceButton = function(){
     $(".roll-dice-button").hide();
 }
@@ -210,6 +249,22 @@ const updateCurrentRental = function(player, cell){
     //need somehow to check how many properties the player has and calculate the currentRental;
     board[player.position].currentRental = board[player.position].rental[0];
     console.log(board[player.position])
+}
+
+const handleTaxCell = function(player, cell){
+  
+}
+
+const handleParkingCell = function(player, cell){
+
+}
+
+const handleJailCell = function(player, cell){
+  if (player.getOutOfJail){
+    return
+  } else if (!player.getOutOfJail){
+    //need to create logic to skip one turn
+  }
 }
 
 // const updateCurrentCell = function(cell, player){
