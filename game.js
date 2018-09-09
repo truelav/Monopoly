@@ -71,6 +71,8 @@ $(document).ready(function() {
   });
 });
 
+//nedd to add when landing on jail or parking, tax and utility square~
+
 
 const startGame = function(){
   numberOfPlayers = $("#player-number").val();
