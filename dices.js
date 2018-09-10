@@ -360,7 +360,9 @@ const rollDice = function (player) {
   } else {
     die1 = Math.floor( Math.random() * 6 ) + 1;
     die2 = Math.floor( Math.random() * 6 ) + 1;
+    // die1 = 5;
+    // die2 = 5;
     sumDices = die1 + die2;
-    sumDices = 41;
+    // sumDices = 41;
   }
 }

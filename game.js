@@ -83,11 +83,18 @@ $(document).ready(function() {
 
     //the end turn functionality will persist doesnt matter if player in jail or not
     $(".end-turn").click( function() {
-      endTurn(currentPlayer, nextPlayer)
-      resetDices();
-      showRollDiceButton(); 
-      showBuyPropertyButton();
-      console.log(players);
+
+      //probably here if you roll 6x6 or 5x5 etc you can roll again
+      if (checkIfDiceSame()){
+        resetDices();
+        showRollDiceButton(); 
+      } else {
+        endTurn(currentPlayer, nextPlayer)
+        resetDices();
+        showRollDiceButton(); 
+        showBuyPropertyButton();
+        console.log(players);
+      }
     })
 
   });

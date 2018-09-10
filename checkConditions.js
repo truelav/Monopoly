@@ -16,6 +16,14 @@ const checkPlayerTurn = function(){
     }
 }
 
+checkIfDiceSame = function(){
+    if (die1 === die2 && die1 !== 0 ){
+        return true ;
+    } else {
+        return false;
+    }
+}
+
 const checkIfPlayerInJail = function(player){
     if (player.inJail){
         return true
@@ -24,15 +32,15 @@ const checkIfPlayerInJail = function(player){
     }
 }
 
-const checkPlayerFullCycle = function(player, cell){
-    if ( player.position > 39) {
+// const checkPlayerFullCycle = function(player, cell){
+//     if ( player.position > 39) {
         
-        player.position = player.position - 40;
-        updatePlayerMoney(player, 200)
-    } 
-    cell = board[player.position]
-    console.log(cell)
-}
+//         player.position = player.position - 40;
+//         updatePlayerMoney(player, 200)
+//     } 
+//     cell = board[player.position]
+//     console.log(cell)
+// }
 
 const checkTypeOfProperty = function(cell, player){  
     if (cell.type === "property"){

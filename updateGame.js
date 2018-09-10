@@ -26,9 +26,14 @@ const appendGamesUpdates = function() {
                     .append( 
                       `
                       <div class="cell-information">
+                        <div class="top-bar"></div>
                         <p>${currentCell.name}</p>
                         <p>Price: ${currentCell.price}</p>
-                        <p>Rent: ${currentCell.rental}</p>
+                        <p>Current Rent: ${currentCell.currentRental}</p>
+                        <p>One House: ${currentCell.rental[1]}</p>
+                        <p>Three Houses: ${currentCell.rental[2]}</p>
+                        <p>One Hotel: ${currentCell.rental[3]}</p>
+                        <p>Mortgage: 50</p>
                         <div class="action-buttons">
                           <button class="buy-property">Buy Property</button>
                           <button class="bid-prperty">Bid Property</button>
@@ -99,6 +104,23 @@ const appendGamesUpdates = function() {
                           )
   }
   
+  const appendUtility = function(){
+    $(".game-updates")
+                        .append( 
+                        `
+                        <div class="cell-information">
+                            <p>${currentCell.name}</p>
+                            <p>Current Rent: ${currentCell.currentRental}</p>
+                            <p>Rent for 1 Utility: ${currentCell.rental[0]}</p>
+                            <p>Rent for 2 Utilities: ${currentCell.rental[1]}</p>
+                            <p>Mortage: 100</p>
+                            <button class="end-turn">End Turn</button>
+                        </div> 
+                        `
+                        )
+    }
+  
+
   const appendChance = function(cell) {
     $(".game-updates")
                       .append( 

@@ -91,6 +91,7 @@ const board  =  [
     name: "ELECTRIC COMPANY",
     square: 12,
     price: 150,
+    currentRental: 0,
     rental: [100, 200],
     type: "utility",
     owned: false

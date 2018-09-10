@@ -25,6 +25,8 @@ const updatePlayerPosition = function(player, position){
     if (player.position + position > 39){
         player.position += position - 40;
         updatePlayerMoney(player, 200)
+    }  else {
+        player.position += position;
     }
     $(`.${player.piece}`).detach().prependTo(`#cell-${player.position}`);
 };
