@@ -69,7 +69,7 @@ const checkTypeOfProperty = function(cell, player){
         communityCard(player);
         appendCommunity();
     } else if (cell.type === "utility") {
-        apendUpdatesProperty(cell);
+        appendUtility();
     
         $(".buy-property").click( function(){
             buyProperty(player, cell)

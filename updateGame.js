@@ -127,6 +127,7 @@ const appendGamesUpdates = function() {
                         `
                         <div class="cell-information">
                           <p>${currentCell.name}</p>
+                          <img src="pics/chance.jpg" alt="chance" border="0" width="75">
                           <p>${currentChanceCard.name}</p>
                           <button class="end-turn">End Turn</button>
                         </div> 
@@ -140,6 +141,7 @@ const appendGamesUpdates = function() {
                         `
                         <div class="cell-information">
                           <p>${currentCell.name}</p>
+                          <img src="pics/chance.jpg" alt="community" border="0" width="75">
                           <p>${currentCommunityChestCard.name}</p>
                           <button class="end-turn">End Turn</button>
                         </div> 
