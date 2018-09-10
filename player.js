@@ -140,5 +140,6 @@ const findPiecePosition = function(player, destination){
         });
     }
     //need to listen to resize window event and adjust pieces coordinates
+    //also need to check when the player is making a full cycle;
     
 }

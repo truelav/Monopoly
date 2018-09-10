@@ -189,7 +189,7 @@ const board  =  [
     price: 200,
     rental: [25, 50, 100, 200],
     currentRental: 0,
-    type: "station",
+    type: "railroad",
     owned: false
   },{
     name: "ATLANTIC AVENUE",
@@ -259,7 +259,7 @@ const board  =  [
     price: 200,
     rental: [25, 50, 100, 200],
     currentRental: 0,
-    type: "station",
+    type: "railroad",
     owned: false
   },{
     name: "Chance",
