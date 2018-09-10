@@ -50,6 +50,8 @@ $(document).ready(function() {
       //update dices graphically
       die1Val();
       die2Val();
+      
+      findPiecePosition(currentPlayer, sumDices);
 
       //updating the player position
       updatePlayerPosition(currentPlayer, sumDices);

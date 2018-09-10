@@ -126,3 +126,19 @@ const updatePlayerInJail = function(player){
         player.inJail = false;
     }
 }
+
+const findPiecePosition = function(player, destination){
+    let startPosition = player.position;
+    let currentPosition = player.position;
+    let moves = destination + currentPosition;
+
+    for (var i = currentPosition; i < moves + 1; i++){
+        let  x = $(`#cell-${i}`).position()
+  
+        $("."+ player.piece).animate({ 'top': x.top + 'px', 'left': x.left + 'px'}, 350, function(){
+
+        });
+    }
+    //need to listen to resize window event and adjust pieces coordinates
+    
+}

@@ -363,6 +363,6 @@ const rollDice = function (player) {
     // die1 = 5;
     // die2 = 5;
     sumDices = die1 + die2;
-    sumDices = 7;
+    //sumDices = 7;
   }
 }
