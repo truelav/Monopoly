@@ -85,6 +85,8 @@ body {
     width: 100%;
     height: 20%;
     background-color: gray;
+    border-bottom: solid black 2px;
+    /* border-right: solid black 1px; */
   }
   
   .square-1, .square-10 {
@@ -130,12 +132,24 @@ body {
     justify-content: space-between;
   }
 
-  .cell-color-left, .cell-color-right {
+  .cell-color-left {
     width: 20%;
     height: 100%;
     background-color: gray;
     display: flex;
     justify-content: flex-edn;
+    border-left: solid black 2px;
+    border-right: solid black 1px;
+  }
+
+  .cell-color-right {
+    width: 20%;
+    height: 100%;
+    background-color: gray;
+    display: flex;
+    justify-content: flex-edn;
+    border-left: solid black 1px;
+    border-right: solid black 2px;
   }
 
   .page-view {
@@ -176,4 +190,5 @@ body {
     margin: 0;
     width: 100%;
     height: 30px;
+    border: solid black 1px;
   }
